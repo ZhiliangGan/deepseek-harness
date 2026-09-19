@@ -1,0 +1,20 @@
+# Replay counterpart to notes.cordis.yml. It includes cordis.yml directly
+# because a config patch cannot target an entry behind a nested include, then
+# restates the notes overlay while replacing the live model with keyless
+# replay (an override-only script; no recorded session fixture is needed).
+- id: base
+  name: '@deepseek-ai/cordis-plugin-include'
+  config:
+    path: ./cordis.yml
+    patches:
+      - id: llm-deepseek
+        name: '@deepseek-ai/dsh-llm-deepseek'
+        disabled: true
+      - insert:
+          - id: tool-notes
+            name: '@deepseek-ai/dsh-tool-notes'
+            config:
+              maxNotes: 64
+              maxNoteChars: 8000
+          - id: llm-replay
+            name: '@deepseek-ai/dsh-llm-replay'

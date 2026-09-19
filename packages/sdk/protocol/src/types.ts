@@ -36,6 +36,13 @@ export interface SessionPromptParams {
   sessionId: string
   /** The prompt content blocks, sent verbatim as the user message. */
   contentBlocks: ContentBlock[]
+  /**
+   * JSON Schema (dsh-tools supported subset, object or array root) the turn's
+   * final reply must satisfy. Active only when the deployment composed
+   * `@deepseek-ai/dsh-structured-output`; the settlement rides the durable
+   * `structured-output/outcome` session event.
+   */
+  outputSchema?: unknown
 }
 
 /** Durable enqueue receipt for one prompt. */

@@ -58,6 +58,7 @@ import * as ToolSkill from '@deepseek-ai/dsh-tool-skill'
 import * as ToolSessionQuery from '@deepseek-ai/dsh-tool-session-query'
 import * as ToolTasks from '@deepseek-ai/dsh-tool-jobs'
 import * as ToolTodo from '@deepseek-ai/dsh-tool-todo'
+import * as ToolNotes from '@deepseek-ai/dsh-tool-notes'
 import * as ToolSubagent from '@deepseek-ai/dsh-tool-subagent'
 import * as ToolWeb from '@deepseek-ai/dsh-tool-web'
 import VmWorkflowEngine from '@deepseek-ai/dsh-workflow-worker-thread'
@@ -517,6 +518,18 @@ const TOOL_PACKAGES: ToolPackage[] = [
     },
     note:
       'todo_write is session-owned state; UIs render the latest todo/write event as a checklist. `allowParallelInProgress` is required with no default, so the catalog states its choice: `true`, whose description invites several `in_progress` items. A deployment choosing `false` receives the same tool with a description asking for exactly one active task.',
+  },
+  {
+    pkg: '@deepseek-ai/dsh-tool-notes',
+    dir: 'tool-notes',
+    source: 'packages/notes/tool-notes/src/index.ts',
+    requires: ['ctx.tools', 'owning Agent session'],
+    writes: ['tool/call', 'notes/change', 'tool/result'],
+    async mount(ctx) {
+      await ctx.plugin(ToolNotes, { maxNotes: 64, maxNoteChars: 8000 })
+    },
+    note:
+      'Five session-owned persistent note tools; UIs render from notes/change events. `maxNotes` and `maxNoteChars` default to 64 and 8000, and the catalog states those defaults. Notes survive context compaction and restarts because the owning session log, not the live context, holds them.',
   },
   {
     pkg: '@deepseek-ai/dsh-tool-workflow',

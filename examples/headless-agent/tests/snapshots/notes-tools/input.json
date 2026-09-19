@@ -1,0 +1,8 @@
+{
+  "steps": [
+    {
+      "op": "prompt",
+      "text": "Record the decision to persist notes in the session log, append the finding that replay is keyless, list the note set, then read the decision back."
+    }
+  ]
+}

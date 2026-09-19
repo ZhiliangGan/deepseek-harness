@@ -109,6 +109,9 @@ flowchart LR
   pkg_agent_spine_demo["agent-spine-demo"]
   pkg_goal["goal"]
   svc_goals["ctx.goals<br/>Same-session goal domain"]
+  pkg_structured_output["structured-output"]
+  svc_structuredOutput["ctx.structuredOutput<br/>Structured-output contracts"]
+  pkg_sdk_jsonrpc_server["sdk-jsonrpc-server"]
   pkg_e2b["e2b"]
   svc_e2b["ctx.e2b<br/>E2B sandbox lifecycle owner"]
   pkg_fs_e2b["fs-e2b"]
@@ -268,6 +271,7 @@ flowchart LR
   pkg_storage_domain --> svc_storageDomain
   pkg_storage_json --> svc_storage
   pkg_storage_sqlite --> svc_storage
+  pkg_structured_output --> svc_structuredOutput
   pkg_subagent --> svc_subagents
   pkg_subagent_acp --> svc_subagents
   pkg_subagent_claude_code --> svc_subagents
@@ -368,6 +372,7 @@ flowchart LR
   svc_storage --> pkg_storage_domain
   svc_storageDomain --> pkg_message_feedback
   svc_storageDomain --> pkg_workspace
+  svc_structuredOutput --> pkg_sdk_jsonrpc_server
   svc_subagents --> pkg_tool_ralph
   svc_subagents --> pkg_tool_subagent
   svc_subagents --> pkg_tool_subagent_control
@@ -443,6 +448,7 @@ flowchart LR
 | `ctx.agentDefaultModel` | `core` | [`agent-default-model`](../packages/core/agent-default-model) | - | [`headless`](../packages/bundle/headless), [`host-apiproxy`](../packages/host/apiproxy) | - | Layers the default ModelSelection through settings so direct and Host-backed Agent entry points share one state owner. |
 | `ctx.agentLoop` | `bundle` | [`agent-loop`](../packages/core/agent-loop) | - | [`agent-spine-demo`](../packages/examples/agent-spine-demo) | - | The one concrete loop plugin; extension packages depend on dsh-agent events and services, not on this package. |
 | `ctx.goals` | `core` | [`goal`](../packages/goal/goal) | - | - | - | Folds revisioned objective state from the session log and keeps live continuation activation process-local. |
+| `ctx.structuredOutput` | `core` | [`structured-output`](../packages/structured-output/structured-output) | - | [`sdk-jsonrpc-server`](../packages/sdk/server) | - | Validates the final reply of a conversation turn against an armed JSON Schema at the stop boundary and steers bounded retries; the SDK server arms per-prompt contracts through it. |
 | `ctx.e2b` | `core` | [`e2b`](../packages/e2b/e2b) | - | [`fs-e2b`](../packages/e2b/fs-e2b), [`subprocess-e2b`](../packages/e2b/subprocess-e2b) | - | Owns one shared E2B SDK handle, remote working directory, and final sandbox disposition so both fundamental E2B providers inhabit the same Linux runtime. |
 | `ctx.subprocess` | `seam` | [`subprocess`](../packages/subprocess/subprocess) | [`subprocess-local`](../packages/subprocess/subprocess-local), [`subprocess-e2b`](../packages/e2b/subprocess-e2b) | [`bash-local`](../packages/shell/bash-local), [`bash-sandbox`](../packages/shell/bash-sandbox), [`terminal-bash`](../packages/terminal/terminal-bash), [`lsp-stdio`](../packages/lsp/lsp-stdio), [`subagent-acp`](../packages/subagent/subagent-acp), [`subagent-codex`](../packages/subagent/subagent-codex), [`subagent-claude-code`](../packages/subagent/subagent-claude-code) | - | The bash executors, the PTY shell backend, the LSP host, and the out-of-process ACP, Codex, and Claude Code subagent backends spawn through ctx.subprocess; the service owns process coordinates, tree/session lifetime, stdio dispositions, terminal mechanics, and kill escalation. |
 | `ctx.shell` | `seam` | [`shell`](../packages/shell/shell) | [`bash-local`](../packages/shell/bash-local), [`bash-sandbox`](../packages/shell/bash-sandbox), [`pwsh-local`](../packages/shell/pwsh-local) | [`tool-bash`](../packages/shell/tool-bash), [`tool-pwsh`](../packages/shell/tool-pwsh), [`hooks-claude-code`](../packages/hooks/hooks-claude-code), [`hooks-codex`](../packages/hooks/hooks-codex) | - | The model-facing shell tools and hook bridges consume this seam; sandboxed, remote, or PowerShell executors replace bash-local without touching them. |

@@ -111,6 +111,9 @@ flowchart LR
   pkg_agent_spine_demo["agent-spine-demo"]
   pkg_goal["goal"]
   svc_goals["ctx.goals<br/>Same-session goal domain"]
+  pkg_structured_output["structured-output"]
+  svc_structuredOutput["ctx.structuredOutput<br/>Structured-output contracts"]
+  pkg_sdk_jsonrpc_server["sdk-jsonrpc-server"]
   pkg_e2b["e2b"]
   svc_e2b["ctx.e2b<br/>E2B sandbox lifecycle owner"]
   pkg_fs_e2b["fs-e2b"]
@@ -270,6 +273,7 @@ flowchart LR
   pkg_storage_domain --> svc_storageDomain
   pkg_storage_json --> svc_storage
   pkg_storage_sqlite --> svc_storage
+  pkg_structured_output --> svc_structuredOutput
   pkg_subagent --> svc_subagents
   pkg_subagent_acp --> svc_subagents
   pkg_subagent_claude_code --> svc_subagents
@@ -370,6 +374,7 @@ flowchart LR
   svc_storage --> pkg_storage_domain
   svc_storageDomain --> pkg_message_feedback
   svc_storageDomain --> pkg_workspace
+  svc_structuredOutput --> pkg_sdk_jsonrpc_server
   svc_subagents --> pkg_tool_ralph
   svc_subagents --> pkg_tool_subagent
   svc_subagents --> pkg_tool_subagent_control
@@ -445,6 +450,7 @@ flowchart LR
 | `ctx.agentDefaultModel` | `core` | [`agent-default-model`](../packages/core/agent-default-model) | - | [`headless`](../packages/bundle/headless), [`host-apiproxy`](../packages/host/apiproxy) | - | 通过 settings 分层默认 `ModelSelection`，让直接入口与 Host 支撑的 Agent 入口共享同一个状态所有者。 |
 | `ctx.agentLoop` | `bundle` | [`agent-loop`](../packages/core/agent-loop) | - | [`agent-spine-demo`](../packages/examples/agent-spine-demo) | - | 唯一的具体循环插件；扩展包依赖 dsh-agent 的事件和服务，而不依赖此包。 |
 | `ctx.goals` | `core` | [`goal`](../packages/goal/goal) | - | - | - | 从会话日志折叠带修订版本的目标状态，并将实时延续激活保留在进程本地。 |
+| `ctx.structuredOutput` | `core` | [`structured-output`](../packages/structured-output/structured-output) | - | [`sdk-jsonrpc-server`](../packages/sdk/server) | - | 在停止边界按已挂载的 JSON Schema 校验对话 turn 的最终回复并 steer 受限重试；SDK server 通过它挂载逐 prompt 契约。 |
 | `ctx.e2b` | `core` | [`e2b`](../packages/e2b/e2b) | - | [`fs-e2b`](../packages/e2b/fs-e2b), [`subprocess-e2b`](../packages/e2b/subprocess-e2b) | - | 拥有一个共享的 E2B SDK 句柄、远程工作目录和最终沙箱处置，使两个基础 E2B 提供方处于同一个 Linux 运行时中。 |
 | `ctx.subprocess` | `seam` | [`subprocess`](../packages/subprocess/subprocess) | [`subprocess-local`](../packages/subprocess/subprocess-local), [`subprocess-e2b`](../packages/e2b/subprocess-e2b) | [`bash-local`](../packages/shell/bash-local), [`bash-sandbox`](../packages/shell/bash-sandbox), [`terminal-bash`](../packages/terminal/terminal-bash), [`lsp-stdio`](../packages/lsp/lsp-stdio), [`subagent-acp`](../packages/subagent/subagent-acp), [`subagent-codex`](../packages/subagent/subagent-codex), [`subagent-claude-code`](../packages/subagent/subagent-claude-code) | - | Bash 执行器、PTY shell 后端、LSP Host，以及进程外 ACP、Codex 和 Claude Code subagent 后端都通过 ctx.subprocess 执行 spawn；该服务负责进程坐标、进程树／会话生命周期、stdio 处置、终端机制和 kill 升级。 |
 | `ctx.shell` | `seam` | [`shell`](../packages/shell/shell) | [`bash-local`](../packages/shell/bash-local), [`bash-sandbox`](../packages/shell/bash-sandbox), [`pwsh-local`](../packages/shell/pwsh-local) | [`tool-bash`](../packages/shell/tool-bash), [`tool-pwsh`](../packages/shell/tool-pwsh), [`hooks-claude-code`](../packages/hooks/hooks-claude-code), [`hooks-codex`](../packages/hooks/hooks-codex) | - | 面向模型的 shell 工具和钩子桥接消费此 seam；沙箱、远程或 PowerShell 执行器可以替换 bash-local，而无需改动这些消费方。 |

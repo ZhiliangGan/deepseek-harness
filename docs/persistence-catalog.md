@@ -420,6 +420,24 @@ Source: [`packages/feedback/command-feedback/src/index.ts:62`](../packages/feedb
 
 Source: [`packages/goal/goal/src/domain.ts:66`](../packages/goal/goal/src/domain.ts)
 
+### `guardian/*`
+
+<a id="guardianreview--log-only"></a>
+
+#### `guardian/review` — log-only
+
+```ts persistence-catalog
+/**
+ * One guardian review settled (the auxiliary model returned a usable
+ * allow/deny). Log-only audit, appended BEFORE the guardian claims the
+ * approval waterfall; `defer` outcomes (malformed, timeout, aborted,
+ * error) record nothing and the remaining answerer chain decides.
+ */
+'guardian/review': GuardianReview
+```
+
+Source: [`packages/interaction/guardian-approval/src/types.ts:34`](../packages/interaction/guardian-approval/src/types.ts)
+
 ### `hook/*`
 
 <a id="hookinvoked--log-only"></a>
@@ -493,6 +511,23 @@ Source: [`packages/llm/llm-retry/src/types.ts:9`](../packages/llm/llm-retry/src/
 ```
 
 Source: [`packages/llm/llm-retry/src/types.ts:11`](../packages/llm/llm-retry/src/types.ts)
+
+### `notes/*`
+
+<a id="noteschange--log-only"></a>
+
+#### `notes/change` — log-only
+
+```ts persistence-catalog
+/**
+ * One whole-note upsert or one deletion. Log-only state; never derived
+ * history. The latest change per id wins on replay; a delete of an absent
+ * id changes nothing.
+ */
+'notes/change': NotesChange
+```
+
+Source: [`packages/notes/tool-notes/src/types.ts:90`](../packages/notes/tool-notes/src/types.ts)
 
 ### `permission/*`
 
@@ -686,6 +721,38 @@ Source: [`packages/core/session/src/types.ts:256`](../packages/core/session/src/
 ```
 
 Source: [`packages/core/session/src/types.ts:254`](../packages/core/session/src/types.ts)
+
+### `structured-output/*`
+
+<a id="structured-outputarmed--log-only"></a>
+
+#### `structured-output/armed` — log-only
+
+```ts persistence-catalog
+/**
+ * One contract became active: appended when a deployment standing schema
+ * or a per-turn arm arms validation. Log-only state; never derived
+ * history. The latest armed event governs until the next outcome settles
+ * its turn.
+ */
+'structured-output/armed': StructuredOutputArmed
+```
+
+Source: [`packages/structured-output/structured-output/src/types.ts:63`](../packages/structured-output/structured-output/src/types.ts)
+
+<a id="structured-outputoutcome--log-only"></a>
+
+#### `structured-output/outcome` — log-only
+
+```ts persistence-catalog
+/**
+ * One turn's validation settled (valid value or exhausted retries).
+ * Log-only state; never derived history.
+ */
+'structured-output/outcome': StructuredOutputOutcome
+```
+
+Source: [`packages/structured-output/structured-output/src/types.ts:68`](../packages/structured-output/structured-output/src/types.ts)
 
 ### `subagent/*`
 

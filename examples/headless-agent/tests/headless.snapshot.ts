@@ -31,6 +31,10 @@ const ptyStreamExpected = join(ptyScenarioDir, 'stream-json.expected.jsonl')
 const ptyConfigPath = fileURLToPath(new URL('../pty.cordis.snapshot.yml', import.meta.url))
 const goalScenarioDir = join(snapshotsDir, 'goal-tools')
 const goalConfigPath = fileURLToPath(new URL('../goal.cordis.snapshot.yml', import.meta.url))
+const notesScenarioDir = join(snapshotsDir, 'notes-tools')
+const notesConfigPath = fileURLToPath(new URL('../notes.cordis.snapshot.yml', import.meta.url))
+const structuredScenarioDir = join(snapshotsDir, 'structured-output')
+const structuredConfigPath = fileURLToPath(new URL('../structured-output.cordis.snapshot.yml', import.meta.url))
 const retryScenarioDir = join(snapshotsDir, 'provider-retry')
 const retryConfigPath = fileURLToPath(new URL('../retry.cordis.snapshot.yml', import.meta.url))
 const compactionScenarioDir = join(snapshotsDir, 'compaction-recovery')
@@ -154,27 +158,27 @@ function normalizeHeadlessStream(rawStdout: string, cwd: string): string {
   return normalizeStdout(`${normalizedRecords.map(record => JSON.stringify(record)).join('\n')}\n`, context)
 }
 
-/** Zero durable goal timestamps inside both metadata records and rendered XML JSON. */
-function normalizeGoalTimestamps(value: unknown): unknown {
+/** Zero durable goal/notes timestamps inside both metadata records and rendered XML JSON. */
+function zeroDurableTimestamps(value: unknown): unknown {
   if (typeof value === 'string') {
     return value.replace(/("(?:createdAt|updatedAt|clearedAt)":)\d+/g, '$10')
   }
-  if (Array.isArray(value)) return value.map(normalizeGoalTimestamps)
+  if (Array.isArray(value)) return value.map(zeroDurableTimestamps)
   if (value !== null && typeof value === 'object') {
     return Object.fromEntries(Object.entries(value).map(([key, item]) => [
       key,
       ['createdAt', 'updatedAt', 'clearedAt'].includes(key) && typeof item === 'number'
         ? 0
-        : normalizeGoalTimestamps(item),
+        : zeroDurableTimestamps(item),
     ]))
   }
   return value
 }
 
-/** Normalize the stream's durable goal timestamps after the shared scrubbers. */
-function normalizeGoalStream(rawStdout: string, cwd: string): string {
+/** Normalize the stream's durable goal/notes timestamps after the shared scrubbers. */
+function normalizeTimestampedStream(rawStdout: string, cwd: string): string {
   return parseJsonl(normalizeHeadlessStream(rawStdout, cwd))
-    .map(record => JSON.stringify(normalizeGoalTimestamps(record)))
+    .map(record => JSON.stringify(zeroDurableTimestamps(record)))
     .join('\n') + '\n'
 }
 
@@ -696,7 +700,102 @@ describe('headless stream-json snapshots', () => {
     })
 
     expect(result.stderr).toBe('')
-    const normalized = normalizeGoalStream(result.stdout, runCwd)
+    const normalized = normalizeTimestampedStream(result.stdout, runCwd)
+    if (refreshing) await writeFile(streamExpected, normalized)
+    expect(normalized).toBe(await readFile(streamExpected, 'utf8'))
+  }, LOADER_SMOKE_TEST_TIMEOUT_MS)
+
+  it('replays persistent notes tools through the one-shot app', async () => {
+    const prompt = await scenarioPrompt(notesScenarioDir, 'notes-tools')
+    const streamExpected = join(notesScenarioDir, 'stream-json.expected.jsonl')
+    let runCwd = ''
+    const result = await runLoaderSmoke({
+      label: 'notes tools headless stream-json snapshot',
+      tempDirPrefix: 'headless-snapshot-notes-tools-',
+      binScript,
+      libBinScript: binScript,
+      configPath: notesConfigPath,
+      binArgs: [notesConfigPath, prompt],
+      tsconfigPath,
+      env: {
+        DSH_SNAPSHOT: 'replay',
+        DSH_SNAPSHOT_FILE: join(notesScenarioDir, 'session.jsonl'),
+        DSH_SNAPSHOT_OVERRIDE: join(notesScenarioDir, 'replay.override.json'),
+        NODE_OPTIONS: [process.env.NODE_OPTIONS, '--disable-warning=ExperimentalWarning'].filter(Boolean).join(' '),
+      },
+      prepare: (cwd) => { runCwd = cwd },
+      inspect: async (cwd) => {
+        const logs = await persistedLogs(cwd)
+        expect(logs).toHaveLength(1)
+        const records = parseJsonl(logs[0]?.content ?? '')
+        const calls = records.filter(record => record.type === 'tool/call')
+          .map(record => (record.data as JsonObject | undefined)?.name)
+        expect(calls).toEqual(['write_note', 'append_note', 'list_notes', 'read_note'])
+        const changes = records.filter(record => record.type === 'notes/change')
+        expect(changes).toHaveLength(2)
+        expect((changes[0]?.data as JsonObject | undefined)?.operation).toBe('upsert')
+        const firstNote = ((changes[0]?.data as JsonObject | undefined)?.note ?? {}) as JsonObject
+        expect(firstNote.id).toBe('decisions')
+        expect(firstNote.revision).toBe(1)
+        expect(firstNote.content).toBe(
+          'Persist working notes in the owning session log so they survive context compaction and restarts.',
+        )
+        const secondNote = ((changes[1]?.data as JsonObject | undefined)?.note ?? {}) as JsonObject
+        expect(secondNote.id).toBe('findings')
+        expect(secondNote.content).toBe(
+          'The snapshot replay path is keyless: the override script fully replaces the derived one.',
+        )
+      },
+    })
+
+    expect(result.stderr).toBe('')
+    const normalized = normalizeTimestampedStream(result.stdout, runCwd)
+    if (refreshing) await writeFile(streamExpected, normalized)
+    expect(normalized).toBe(await readFile(streamExpected, 'utf8'))
+  }, LOADER_SMOKE_TEST_TIMEOUT_MS)
+
+  it('replays a structured-output contract with one steering retry', async () => {
+    const prompt = await scenarioPrompt(structuredScenarioDir, 'structured-output')
+    const streamExpected = join(structuredScenarioDir, 'stream-json.expected.jsonl')
+    let runCwd = ''
+    const result = await runLoaderSmoke({
+      label: 'structured-output headless stream-json snapshot',
+      tempDirPrefix: 'headless-snapshot-structured-output-',
+      binScript,
+      libBinScript: binScript,
+      configPath: structuredConfigPath,
+      binArgs: [structuredConfigPath, prompt],
+      tsconfigPath,
+      env: {
+        DSH_SNAPSHOT: 'replay',
+        DSH_SNAPSHOT_FILE: join(structuredScenarioDir, 'session.jsonl'),
+        DSH_SNAPSHOT_OVERRIDE: join(structuredScenarioDir, 'replay.override.json'),
+        NODE_OPTIONS: [process.env.NODE_OPTIONS, '--disable-warning=ExperimentalWarning'].filter(Boolean).join(' '),
+      },
+      prepare: (cwd) => { runCwd = cwd },
+      inspect: async (cwd) => {
+        const logs = await persistedLogs(cwd)
+        expect(logs).toHaveLength(1)
+        const records = parseJsonl(logs[0]?.content ?? '')
+        const armed = records.filter(record => record.type === 'structured-output/armed')
+        expect(armed).toHaveLength(1)
+        // The rejected prose steered exactly one retry notice into the turn.
+        const retries = records.filter((record) => {
+          if (record.type !== 'user/message') return false
+          const source = (record.data as JsonObject | undefined)?.source as JsonObject | undefined
+          return source?.kind === 'plugin' && source?.plugin === 'structured-output' && source?.form === 'notice'
+        })
+        expect(retries).toHaveLength(1)
+        const outcomes = records.filter(record => record.type === 'structured-output/outcome')
+        expect(outcomes).toHaveLength(1)
+        expect(outcomes[0]?.data).toEqual({
+          turn: 1, valid: true, attempts: 2, value: { status: 'ok', summary: 'structured-output snapshot proof' },
+        })
+      },
+    })
+
+    expect(result.stderr).toBe('')
+    const normalized = normalizeHeadlessStream(result.stdout, runCwd)
     if (refreshing) await writeFile(streamExpected, normalized)
     expect(normalized).toBe(await readFile(streamExpected, 'utf8'))
   }, LOADER_SMOKE_TEST_TIMEOUT_MS)

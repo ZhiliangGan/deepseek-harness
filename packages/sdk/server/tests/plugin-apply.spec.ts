@@ -8,6 +8,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
 import * as agentCore from '@deepseek-ai/dsh-agent-spine-demo'
 import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
+import StructuredOutput from '@deepseek-ai/dsh-structured-output'
 import * as jsonrpc from '../src/index.ts'
 
 /**
@@ -57,10 +58,11 @@ async function settle(): Promise<void> {
 /** Mount the real plugin on a minimal harness with in-memory stdio and exit. */
 async function mountPlugin(
   storageDir: string,
-  options: { writeDelayMs?: number; failFlush?: boolean } = {},
+  options: { writeDelayMs?: number; failFlush?: boolean; withStructuredOutput?: boolean } = {},
 ): Promise<ApplyHarness> {
   const ctx = new Context()
   await ctx.plugin(agentCore, { workspaceContext: false })
+  if (options.withStructuredOutput === true) await ctx.plugin(StructuredOutput, { maxRetries: 0 })
   await ctx.plugin(JsonlSessionPersistence, { root: storageDir })
   await new Promise(resolve => setTimeout(resolve, 50))
 
@@ -206,6 +208,82 @@ describe('dsh-sdk-jsonrpc-server plugin apply', () => {
         jsonrpc: '2.0',
         params: { sessionId: 'main', status: 'idle' },
       })
+    } finally {
+      await harness.dispose()
+      await rm(storageDir, { recursive: true, force: true })
+    }
+  })
+
+
+  it('arms outputSchema through the structured-output plugin and settles an outcome event', async () => {
+    const storageDir = await mkdtemp(join(tmpdir(), 'dsh-jsonrpc-apply-schema-'))
+    const llmServer = await mockCompletionServer()
+    vi.stubEnv('DEEPSEEK_API_KEY', 'test-key')
+    vi.stubEnv('DEEPSEEK_BASE_URL', llmServer.url)
+    const harness = await mountPlugin(storageDir, { withStructuredOutput: true })
+    try {
+      harness.send({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { cwd: storageDir, provider: 'deepseek-official', model: 'dsagent-model' } })
+      await harness.waitForFrame(frame => frame.id === 1, 'initialize response')
+
+      harness.send({
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'session/prompt',
+        params: {
+          sessionId: 'schema-main',
+          contentBlocks: [{ type: 'text', text: 'classify' }],
+          outputSchema: {
+            type: 'object',
+            required: ['status'],
+            additionalProperties: false,
+            properties: { status: { type: 'string', enum: ['ok', 'error'] } },
+          },
+        },
+      })
+      await harness.waitForFrame(frame => frame.id === 2, 'prompt response')
+      await harness.waitForFrame(
+        frame => frame.method === 'session.status'
+          && (frame.params as { status?: string } | undefined)?.status === 'idle',
+        'idle session status',
+      )
+
+      // The scripted reply 'done' cannot satisfy the schema; with maxRetries 0
+      // the turn settles immediately as one durable outcome event on the wire.
+      const outcome = harness.frames().find((frame) => {
+        if (frame.method !== 'session.event') return false
+        const event = (frame.params as { event?: { type?: string } } | undefined)?.event
+        return event?.type === 'structured-output/outcome'
+      })
+      const payload = (outcome?.params as { event?: { data?: { valid?: boolean; attempts?: number } } } | undefined)?.event?.data
+      expect(payload?.valid).toBe(false)
+      expect(payload?.attempts).toBe(1)
+    } finally {
+      await harness.dispose()
+      await rm(storageDir, { recursive: true, force: true })
+    }
+  })
+
+  it('rejects outputSchema when the deployment did not compose the plugin', async () => {
+    const storageDir = await mkdtemp(join(tmpdir(), 'dsh-jsonrpc-apply-noschema-'))
+    vi.stubEnv('DEEPSEEK_API_KEY', 'test-key')
+    const harness = await mountPlugin(storageDir)
+    try {
+      harness.send({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { cwd: storageDir, provider: 'deepseek-official', model: 'dsagent-model' } })
+      await harness.waitForFrame(frame => frame.id === 1, 'initialize response')
+
+      harness.send({
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'session/prompt',
+        params: {
+          sessionId: 'noschema-main',
+          contentBlocks: [{ type: 'text', text: 'classify' }],
+          outputSchema: { type: 'object' },
+        },
+      })
+      const response = await harness.waitForFrame(frame => frame.id === 2, 'prompt response')
+      expect((response.error as { message?: string } | undefined)?.message)
+        .toContain('structured-output')
     } finally {
       await harness.dispose()
       await rm(storageDir, { recursive: true, force: true })

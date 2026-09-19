@@ -1584,6 +1584,28 @@ export const SERVICE_API: readonly ServiceApiEntry[] = [
     ],
   },
   {
+    key: 'structuredOutput',
+    summary: 'Enforce structured-output contracts on agent turns.',
+    description: 'Enforce structured-output contracts on agent turns.',
+    methods: [
+      {
+        signature: 'readonly standing: StructuredOutputContract | undefined',
+        description: 'Resolved standing contract from config, when one is declared.',
+        parameters: [],
+      },
+      {
+        signature: 'readonly resolved: { readonly maxRetries: number; readonly maxSchemaChars: number }',
+        description: 'Resolved and validated configuration bounds.',
+        parameters: [],
+      },
+      {
+        signature: 'arm(agent: Agent, request: { schema: unknown; maxRetries?: number }): void',
+        description: 'Arm one contract for the agent\'s next completing turn, replacing any pending arm and overriding the standing contract for that turn.',
+        parameters: [{ name: 'agent', description: 'the exact live agent whose next turn validates.' }, { name: 'request', description: 'the schema and an optional retry budget override.' }],
+      },
+    ],
+  },
+  {
     key: 'subagents',
     summary: 'Named provider registry with one-shot runs, durable discovery, and continuable-child operations.',
     description: 'Named provider registry with one-shot runs, durable discovery, and continuable-child operations.',
@@ -2462,6 +2484,14 @@ export const EVENT_API: readonly EventApiEntry[] = [
     parameters: [],
   },
   {
+    name: 'structured-output/decided',
+    mode: 'emit',
+    signature: '\'structured-output/decided\'(this: Scoped<Agent>, payload: StructuredOutputDecided & { agent: Agent }): void',
+    summary: 'One turn\'s structured-output validation settled (valid value or exhausted retries), after its durable `structured-output/outcome` event committed.',
+    description: 'One turn\'s structured-output validation settled (valid value or exhausted retries), after its durable `structured-output/outcome` event committed.',
+    parameters: [{ name: 'payload', description: '.value - the parsed JSON value; absent when invalid. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): agent-scoped listeners receive only that agent.' }],
+  },
+  {
     name: 'subagent/end',
     mode: 'emit',
     signature: '\'subagent/end\'(this: Scoped<SubagentRuntime>, info: SubagentRunEndInfo): void',
@@ -3091,7 +3121,7 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   },
   {
     name: 'GenerateOptions',
-    declaration: 'export interface GenerateOptions {\n    provider: string;\n    model: string;\n    reasoningEffort?: ReasoningEffortId;\n    messages: Message[];\n    system?: string;\n    tools?: ToolSchema[];\n    temperature?: number;\n    maxTokens?: number;\n    stop?: string[];\n    signal?: AbortSignal;\n    sessionId?: Branded<\'SessionId\'>;\n    purpose?: \'compaction\' | \'session-title\';\n}',
+    declaration: 'export interface GenerateOptions {\n    provider: string;\n    model: string;\n    reasoningEffort?: ReasoningEffortId;\n    messages: Message[];\n    system?: string;\n    tools?: ToolSchema[];\n    temperature?: number;\n    maxTokens?: number;\n    stop?: string[];\n    signal?: AbortSignal;\n    sessionId?: Branded<\'SessionId\'>;\n    purpose?: \'compaction\' | \'session-title\' | \'guardian-review\';\n}',
   },
   {
     name: 'GenericCallView',
@@ -4092,6 +4122,14 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   {
     name: 'StreamChunk',
     declaration: 'export type StreamChunk = {\n    type: \'block-start\';\n    index: number;\n    blockType: ContentBlockType;\n} | {\n    type: \'text-delta\';\n    index: number;\n    text: string;\n} | {\n    type: \'reasoning-delta\';\n    index: number;\n    text: string;\n} | {\n    type: \'tool-call-delta\';\n    index: number;\n    id: CallId;\n    name?: string;\n    argumentsDelta: string;\n} | {\n    type: \'block-end\';\n    index: number;\n    block: ContentBlock;\n} | {\n    type: \'usage\';\n    usage: TokenUsage;\n} | {\n    type: \'finish\';\n    reason: FinishReason;\n    replayState?: unknown;\n};',
+  },
+  {
+    name: 'StructuredOutputContract',
+    declaration: 'export interface StructuredOutputContract {\n    readonly schema: JsonSchemaNode;\n    readonly maxRetries: number;\n}',
+  },
+  {
+    name: 'StructuredOutputDecided',
+    declaration: 'export interface StructuredOutputDecided {\n    readonly turn: number;\n    readonly valid: boolean;\n    readonly attempts: number;\n    readonly value?: unknown;\n}',
   },
   {
     name: 'SubagentCapabilities',

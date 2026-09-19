@@ -1,0 +1,22 @@
+# Add the structured-output contract to the real one-shot app: every turn's
+# final reply must be one JSON object with a status and a summary.
+- id: base
+  name: '@deepseek-ai/cordis-plugin-include'
+  config:
+    path: ./cordis.yml
+    patches:
+      - insert:
+          - id: structured-output
+            name: '@deepseek-ai/dsh-structured-output'
+            config:
+              maxRetries: 1
+              schema:
+                type: object
+                required: [status, summary]
+                additionalProperties: false
+                properties:
+                  status:
+                    type: string
+                    enum: [ok, error]
+                  summary:
+                    type: string

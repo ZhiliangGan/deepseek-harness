@@ -29,6 +29,11 @@ interface SessionRecord {
   handle: AgentHandle
 }
 
+/** The optional structured-output service this server arms per prompt. */
+interface StructuredOutputArmingService {
+  arm(agent: Agent, request: { schema: unknown; maxRetries?: number }): void
+}
+
 /** Recover the delegating parent from the service-owned scoped carrier. */
 function subagentParentOf(carrier: Scoped<SubagentRuntime>): Agent {
   return carrierKeyOf(carrier) as Agent
@@ -136,6 +141,16 @@ export class HarnessSdkJsonRpcServer {
     // record against the live registry before delivery (as the ACP bridge does).
     if (this.ctx.agents.get(rec.handle.agent.id) !== rec.handle.agent) {
       throw new Error(`session agent was disposed outside the server: ${params.sessionId}`)
+    }
+    // The structured-output service is optional: the schema activates only in
+    // deployments that composed the plugin. Arming before followup binds the
+    // contract to this exact turn; its settlement rides the session event stream.
+    if (params.outputSchema !== undefined) {
+      const structured = this.ctx.get('structuredOutput') as StructuredOutputArmingService | undefined
+      if (structured === undefined) {
+        throw new Error('outputSchema requires @deepseek-ai/dsh-structured-output in the deployment composition')
+      }
+      structured.arm(rec.handle.agent, { schema: params.outputSchema })
     }
     const message = createUserMessage({ content: params.contentBlocks, source: { kind: 'user' } })
     rec.handle.agent.followup(message)

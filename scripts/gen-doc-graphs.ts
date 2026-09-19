@@ -355,6 +355,14 @@ const SERVICE_ROLES: ServiceRole[] = [
     note: 'Folds revisioned objective state from the session log and keeps live continuation activation process-local.',
   },
   {
+    key: 'structuredOutput',
+    pkg: 'structured-output',
+    title: 'Structured-output contracts',
+    mode: 'core',
+    consumers: ['sdk-jsonrpc-server'],
+    note: 'Validates the final reply of a conversation turn against an armed JSON Schema at the stop boundary and steers bounded retries; the SDK server arms per-prompt contracts through it.',
+  },
+  {
     key: 'e2b',
     pkg: 'e2b',
     title: 'E2B sandbox lifecycle owner',

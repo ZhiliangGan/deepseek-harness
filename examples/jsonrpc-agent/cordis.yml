@@ -66,6 +66,10 @@
   config:
     allowParallelInProgress: true
 
+# Per-prompt outputSchema contracts activate through this optional service.
+- id: structured-output
+  name: '@deepseek-ai/dsh-structured-output'
+
 - id: fs-local
   name: '@deepseek-ai/dsh-fs-local'
   config:

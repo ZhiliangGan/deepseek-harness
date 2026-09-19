@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "chunks",
+    "chunks": [
+      { "type": "block-start", "index": 0, "blockType": "tool-call" },
+      { "type": "tool-call-delta", "index": 0, "id": "call_notes_write", "name": "write_note", "argumentsDelta": "{\"id\":\"decisions\",\"content\":\"Persist working notes in the owning session log so they survive context compaction and restarts.\"}" },
+      { "type": "block-end", "index": 0, "block": { "type": "tool-call", "id": "call_notes_write", "name": "write_note", "arguments": "{\"id\":\"decisions\",\"content\":\"Persist working notes in the owning session log so they survive context compaction and restarts.\"}" } },
+      { "type": "usage", "usage": { "inputTokens": 15, "outputTokens": 9 } },
+      { "type": "finish", "reason": { "kind": "tool-calls" } }
+    ]
+  },
+  {
+    "kind": "chunks",
+    "chunks": [
+      { "type": "block-start", "index": 0, "blockType": "tool-call" },
+      { "type": "tool-call-delta", "index": 0, "id": "call_notes_append", "name": "append_note", "argumentsDelta": "{\"id\":\"findings\",\"text\":\"The snapshot replay path is keyless: the override script fully replaces the derived one.\"}" },
+      { "type": "block-end", "index": 0, "block": { "type": "tool-call", "id": "call_notes_append", "name": "append_note", "arguments": "{\"id\":\"findings\",\"text\":\"The snapshot replay path is keyless: the override script fully replaces the derived one.\"}" } },
+      { "type": "usage", "usage": { "inputTokens": 20, "outputTokens": 12 } },
+      { "type": "finish", "reason": { "kind": "tool-calls" } }
+    ]
+  },
+  {
+    "kind": "chunks",
+    "chunks": [
+      { "type": "block-start", "index": 0, "blockType": "tool-call" },
+      { "type": "tool-call-delta", "index": 0, "id": "call_notes_list", "name": "list_notes", "argumentsDelta": "{}" },
+      { "type": "block-end", "index": 0, "block": { "type": "tool-call", "id": "call_notes_list", "name": "list_notes", "arguments": "{}" } },
+      { "type": "usage", "usage": { "inputTokens": 30, "outputTokens": 4 } },
+      { "type": "finish", "reason": { "kind": "tool-calls" } }
+    ]
+  },
+  {
+    "kind": "chunks",
+    "chunks": [
+      { "type": "block-start", "index": 0, "blockType": "tool-call" },
+      { "type": "tool-call-delta", "index": 0, "id": "call_notes_read", "name": "read_note", "argumentsDelta": "{\"id\":\"decisions\"}" },
+      { "type": "block-end", "index": 0, "block": { "type": "tool-call", "id": "call_notes_read", "name": "read_note", "arguments": "{\"id\":\"decisions\"}" } },
+      { "type": "usage", "usage": { "inputTokens": 35, "outputTokens": 4 } },
+      { "type": "finish", "reason": { "kind": "tool-calls" } }
+    ]
+  },
+  {
+    "kind": "chunks",
+    "chunks": [
+      { "type": "block-start", "index": 0, "blockType": "text" },
+      { "type": "text-delta", "index": 0, "text": "NOTES PERSISTED" },
+      { "type": "block-end", "index": 0, "block": { "type": "text", "text": "NOTES PERSISTED" } },
+      { "type": "usage", "usage": { "inputTokens": 40, "outputTokens": 2 } },
+      { "type": "finish", "reason": { "kind": "stop" } }
+    ]
+  }
+]

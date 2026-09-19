@@ -1,0 +1,12 @@
+# Add the persistent model working-notes tools to the real one-shot app.
+- id: base
+  name: '@deepseek-ai/cordis-plugin-include'
+  config:
+    path: ./cordis.yml
+    patches:
+      - insert:
+          - id: tool-notes
+            name: '@deepseek-ai/dsh-tool-notes'
+            config:
+              maxNotes: 64
+              maxNoteChars: 8000
