@@ -148,12 +148,19 @@ export function createProcessDeepSeekHarness(
   }, () => createProcessHarnessClient(runtime))
 }
 
-/** Per-run options: target session and streaming observer. */
+/** Per-run options: target session, streaming observer, and output contract. */
 export interface RunOptions {
   /** Session id to run on; omitted mints a fresh session per call. */
   sessionId?: string
   /** Observer invoked with every notification for this session tree, in wire order. */
   onNotification?: (notification: HarnessNotification) => void
+  /**
+   * JSON Schema the turn's final reply must satisfy (dsh-tools supported
+   * subset, object or array root). Active only when the deployment composed
+   * `@deepseek-ai/dsh-structured-output`; the validated value rides the
+   * `structured-output/outcome` session event.
+   */
+  outputSchema?: unknown
 }
 
 /**
@@ -173,7 +180,7 @@ export class HarnessSession {
    * @returns the owned activity interval; rejects on transport loss, timeout,
    * or a protocol error.
    */
-  async run(input: string | SdkPromptContentBlock[], options?: Pick<RunOptions, 'onNotification'>): Promise<RunResult> {
+  async run(input: string | SdkPromptContentBlock[], options?: Pick<RunOptions, 'onNotification' | 'outputSchema'>): Promise<RunResult> {
     await this.harness.start()
     const client = this.harness.client
     const contentBlocks = normalizeInput(input)
@@ -196,7 +203,7 @@ export class HarnessSession {
       options?.onNotification?.(notification)
     }
     try {
-      const messageId = await client.prompt(this.id, contentBlocks)
+      const messageId = await client.prompt(this.id, contentBlocks, options?.outputSchema)
       let received = false
       while (true) {
         const notification = await subscription.next()

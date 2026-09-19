@@ -418,6 +418,14 @@
       config:
         allowParallelInProgress: true
 
+    # Persistent model working notes: durable across compaction and restarts,
+    # recovered by re-reading instead of trusting conversation memory.
+    - id: tool-notes
+      name: '@deepseek-ai/dsh-tool-notes'
+      config:
+        maxNotes: 64
+        maxNoteChars: 8000
+
     # Persisted same-session goals reach the model and the slash menu here; the
     # domain, driver, and `/goal` command are above.
     - id: tool-goal

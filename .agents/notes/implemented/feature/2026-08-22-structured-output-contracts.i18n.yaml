@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-22-structured-output-contracts.md
+2026-08-22-structured-output-contracts.md: 7f257f724815f6b8ba1aa9f99a9afaf9edfd829a
+2026-08-22-structured-output-contracts.zh.md: 4599d4c44653ada24a34e4a6f478f05ac27bd6eb

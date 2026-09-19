@@ -1,0 +1,44 @@
+# Replay-backed structured-output patch over the shipped headless profile.
+- id: headless-startup
+  disabled: true
+
+- id: headless-runner
+  disabled: true
+
+- id: llm-deepseek
+  disabled: true
+
+- id: agent-loop
+  config:
+    agents:
+      - id: main
+        provider: deepseek-official
+        model: deepseek-v4-flash
+        cwd: !!js process.cwd()
+
+- id: session-persistence-jsonl
+  config:
+    root: './.sessions'
+    compression: none
+
+- insert:
+    - id: structured-output
+      name: '@deepseek-ai/dsh-structured-output'
+      config:
+        maxRetries: 1
+        schema:
+          type: object
+          required: [status, summary]
+          additionalProperties: false
+          properties:
+            status:
+              type: string
+              enum: [ok, error]
+            summary:
+              type: string
+    - id: llm-replay
+      name: '@deepseek-ai/dsh-llm-replay'
+
+- id: session-log-deepseek
+  config:
+    enabled: false

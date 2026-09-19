@@ -1,0 +1,8 @@
+{
+  "steps": [
+    {
+      "op": "prompt",
+      "text": "Summarize the run and reply under the structured-output contract."
+    }
+  ]
+}

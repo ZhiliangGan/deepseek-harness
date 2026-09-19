@@ -550,6 +550,14 @@ const SERVICE_ROLES: ServiceRole[] = [
     note: 'Owns one authenticated OpenSSH connection, installed helper identity, independent program streams and disconnect cleanup for the paired remote providers.',
   },
   {
+    key: 'structuredOutput',
+    pkg: 'structured-output',
+    title: 'Structured-output contracts',
+    mode: 'core',
+    consumers: ['sdk-jsonrpc-server'],
+    note: 'Validates the final reply of a conversation turn against an armed JSON Schema at the stop boundary and steers bounded retries; the SDK server arms per-prompt contracts through it.',
+  },
+  {
     key: 'subprocess',
     pkg: 'subprocess',
     title: 'Subprocess seam',

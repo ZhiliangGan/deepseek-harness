@@ -920,6 +920,28 @@ export interface Config {
 
 来源：[`packages/goal/goal/src/index.ts:172`](../packages/goal/goal/src/index.ts)
 
+<a id="deepseek-aidsh-guardian-approval"></a>
+
+## `@deepseek-ai/dsh-guardian-approval`
+
+Requires: `llm`
+
+```ts config-catalog
+/** Guardian approval configuration. */
+export interface Config {
+  /** Provider route serving the auxiliary review calls. */
+  reviewerProvider: string
+  /** Model serving the auxiliary review calls. */
+  reviewerModel: string
+  /** Output-token cap for one review reply. */
+  maxOutputTokens: number
+  /** Wall-clock budget for one review call; expiry defers to the chain. */
+  timeoutMs: number
+}
+```
+
+Source: [`packages/interaction/guardian-approval/src/index.ts:38`](../packages/interaction/guardian-approval/src/index.ts)
+
 <a id="deepseek-aidsh-headless"></a>
 
 ## `@deepseek-ai/dsh-headless`
@@ -2660,6 +2682,30 @@ export type JournalMode = 'wal' | 'delete' | 'truncate' | 'persist'
 
 来源：[`packages/storage/storage-sqlite/src/index.ts:24`](../packages/storage/storage-sqlite/src/index.ts)
 
+<a id="deepseek-aidsh-structured-output"></a>
+
+## `@deepseek-ai/dsh-structured-output`
+
+Requires: `agents`
+
+```ts config-catalog
+/** Structured-output service configuration. */
+export interface Config {
+  /**
+   * Deployment-wide standing schema: every root-agent turn is validated
+   * against it while no per-turn arm is active. A dsh-tools supported JSON
+   * Schema value.
+   */
+  schema?: unknown
+  /** Rejections that may steer one extra attempt after the first try. */
+  maxRetries?: number
+  /** Maximum UTF-16 code units of the schema's JSON serialization. */
+  maxSchemaChars?: number
+}
+```
+
+Source: [`packages/structured-output/structured-output/src/index.ts:63`](../packages/structured-output/structured-output/src/index.ts)
+
 <a id="deepseek-aidsh-subagent"></a>
 
 ## `@deepseek-ai/dsh-subagent`
@@ -3178,6 +3224,24 @@ export interface Config {
 ```
 
 来源：[`packages/lsp/tool-lsp/src/index.ts:57`](../packages/lsp/tool-lsp/src/index.ts)
+
+<a id="deepseek-aidsh-tool-notes"></a>
+
+## `@deepseek-ai/dsh-tool-notes`
+
+Requires: `tools`
+
+```ts config-catalog
+/** Model-facing notes tool configuration. */
+export interface Config {
+  /** Maximum number of notes one session may hold; a create beyond it fails loud. */
+  maxNotes: number
+  /** Maximum UTF-16 code units of one note's complete content; a longer write fails loud. */
+  maxNoteChars: number
+}
+```
+
+Source: [`packages/notes/tool-notes/src/index.ts:40`](../packages/notes/tool-notes/src/index.ts)
 
 <a id="deepseek-aidsh-tool-present"></a>
 

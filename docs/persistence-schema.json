@@ -5483,6 +5483,106 @@
       }
     },
     {
+      "key": "event:guardian/review",
+      "kind": "event",
+      "event": "guardian/review",
+      "surface": false,
+      "digest": "bf0eecf5245d94b2805460f0570f72ceddab0849dc17510dc035ab1db58cd802",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "decision",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "rationale",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "toolName",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "allow"
+          },
+          {
+            "kind": "literal",
+            "value": "deny"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "guardian/review"
+          }
+        ]
+      }
+    },
+    {
       "key": "event:hook/invoked",
       "kind": "event",
       "event": "hook/invoked",
@@ -6155,6 +6255,143 @@
           {
             "kind": "literal",
             "value": "model/selection"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:notes/change",
+      "kind": "event",
+      "event": "notes/change",
+      "surface": false,
+      "digest": "3486d3e08e5052dc2916b3527ed51cfe4bd18b55ba2617e99e025dae79647cfa",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 9,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 10,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              5
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "id",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "delete"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "note",
+                "type": 6,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "content",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "createdAt",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "id",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "revision",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 7,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "upsert"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "notes/change"
           }
         ]
       }
@@ -8610,6 +8847,353 @@
           {
             "kind": "literal",
             "value": "step/start"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:structured-output/armed",
+      "kind": "event",
+      "event": "structured-output/armed",
+      "surface": false,
+      "digest": "903b35215976a648b06fb4a9e244da923a4e973ea88207692410a3a347aefcc9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 23,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 24,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "maxRetries",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "schema",
+                "type": 3,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 8,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 8,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 13,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 14,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 15,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              6,
+              7
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              6,
+              7,
+              9,
+              10
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 8
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 7,
+                "value": 8
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 5
+          },
+          {
+            "kind": "array",
+            "element": 3
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 7,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 7
+          },
+          {
+            "kind": "union",
+            "types": [
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "structured-output/armed"
+          }
+        ]
+      }
+    },
+    {
+      "key": "event:structured-output/outcome",
+      "kind": "event",
+      "event": "structured-output/outcome",
+      "surface": false,
+      "digest": "370d64b59c1575bf0a7f60767f399f8f7005f0dff67ad1d893ad779cd2530344",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempts",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "valid",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "value",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "violations",
+                "type": 5,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "opaque",
+            "reason": "unknown"
+          },
+          {
+            "kind": "array",
+            "element": 6
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "structured-output/outcome"
           }
         ]
       }
@@ -14977,6 +15561,20 @@
       "sources": []
     },
     {
+      "digest": "0c004899d8db5031d3c949b100fcbdee6c899225470b7e5628a7125da021f475",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "integer"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "0c3f4d2248d9bc9700e2d7253fa71aa9935f5c39af6f11de5727f08cccaf8383",
       "schema": {
         "root": 0,
@@ -16399,6 +16997,35 @@
       ],
       "sources": [
         "packages/attachment/attachment/src/types.ts:28"
+      ]
+    },
+    {
+      "digest": "0f859b2762d02251836f9d4beaa896a50451cf4f97053777e0695a17890180ee",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "allow"
+          },
+          {
+            "kind": "literal",
+            "value": "deny"
+          }
+        ]
+      },
+      "names": [
+        "packages/interaction/guardian-approval/src/types.ts#GuardianDecision"
+      ],
+      "sources": [
+        "packages/interaction/guardian-approval/src/types.ts:12"
       ]
     },
     {
@@ -18031,6 +18658,106 @@
       "sources": []
     },
     {
+      "digest": "15e6d701a2c3f30cd8db437466ebed9579fb1bd6e141153673bf6a9e63e72e62",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              4
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "id",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 3,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "delete"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "note",
+                "type": 5,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 7,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "content",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "createdAt",
+                "type": 6,
+                "optional": false
+              },
+              {
+                "name": "id",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "revision",
+                "type": 6,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 6,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "upsert"
+          }
+        ]
+      },
+      "names": [
+        "packages/notes/tool-notes/src/types.ts#NotesChange"
+      ],
+      "sources": [
+        "packages/notes/tool-notes/src/types.ts:30"
+      ]
+    },
+    {
       "digest": "16d0507cb94b4cfc84a87446b1ba7652d6ec1d65ee1684789e747e30d542800e",
       "schema": {
         "root": 0,
@@ -18274,6 +19001,20 @@
           {
             "kind": "literal",
             "value": "compaction/end"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "19d779fe9968399652f0ba5d41261e4c00a07039de44e52a2f20f1faa9cf3674",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "notes/change"
           }
         ]
       },
@@ -25700,6 +26441,59 @@
       ]
     },
     {
+      "digest": "30830a220049592c81d75787da0904bad4b02cd9202523f94759b0202cb944da",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "content",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "createdAt",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "id",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "revision",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          }
+        ]
+      },
+      "names": [
+        "packages/notes/tool-notes/src/types.ts#NoteSnapshot"
+      ],
+      "sources": [
+        "packages/notes/tool-notes/src/types.ts:16"
+      ]
+    },
+    {
       "digest": "30d5a537b296685770b1241c4b4bbde19d5a31ff81aa23df73fab5e90b8fc65f",
       "schema": {
         "root": 0,
@@ -27086,6 +27880,351 @@
       ]
     },
     {
+      "digest": "3440bc108aaa0f452a02d5f0d4efa3dcbe9f9f1e5f16608ae2bc4fdda174b514",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "maxRetries",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "schema",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 10,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 13,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 14,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              5,
+              6
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              5,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 6,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 7
+          },
+          {
+            "kind": "array",
+            "element": 4
+          },
+          {
+            "kind": "array",
+            "element": 2
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 6,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 6
+          },
+          {
+            "kind": "union",
+            "types": [
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          }
+        ]
+      },
+      "names": [
+        "packages/structured-output/structured-output/src/types.ts#StructuredOutputArmed"
+      ],
+      "sources": [
+        "packages/structured-output/structured-output/src/types.ts:24"
+      ]
+    },
+    {
+      "digest": "3486d3e08e5052dc2916b3527ed51cfe4bd18b55ba2617e99e025dae79647cfa",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 9,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 10,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              5
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "id",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "delete"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "note",
+                "type": 6,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "content",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "createdAt",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "id",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "revision",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 7,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "upsert"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "notes/change"
+          }
+        ]
+      },
+      "names": [
+        "event:notes/change"
+      ],
+      "sources": []
+    },
+    {
       "digest": "34d1ab5c5df378186d6054b1a1beea9a41e41965d6f336f0bc0025c441a82e66",
       "schema": {
         "root": 0,
@@ -27625,6 +28764,108 @@
         ]
       },
       "names": [],
+      "sources": []
+    },
+    {
+      "digest": "370d64b59c1575bf0a7f60767f399f8f7005f0dff67ad1d893ad779cd2530344",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempts",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "valid",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "value",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "violations",
+                "type": 5,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "opaque",
+            "reason": "unknown"
+          },
+          {
+            "kind": "array",
+            "element": 6
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "structured-output/outcome"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/outcome"
+      ],
       "sources": []
     },
     {
@@ -31096,6 +32337,20 @@
       "sources": []
     },
     {
+      "digest": "496fb689064a2f8f43a27e6d6722d82261c32c5e22ecef94648275b0c049b14a",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "structured-output/armed"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "4a9bef9f27a942520cc2279ca7dd3082556e4bff543f66b5c0333e1bbed1cd86",
       "schema": {
         "root": 0,
@@ -34098,7 +35353,9 @@
         ]
       },
       "names": [
-        "event:tool/result.data.meta[5][0][6]",
+        "event:structured-output/armed.data.schema.default[5][0][6]",
+        "event:structured-output/armed.data.schema.default[6]",
+        "event:structured-output/armed.data.schema.examples[6]",
         "event:tool/result.data.meta[6]"
       ],
       "sources": [
@@ -34143,6 +35400,196 @@
       "sources": [
         "packages/core/session/src/types.ts:261"
       ]
+    },
+    {
+      "digest": "55276d2202c04cff9bd591d829ac662eb5637ffde915b2c64dae513c3998b635",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "array",
+            "element": 1
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 10,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 0,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 13,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 6,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 7
+          },
+          {
+            "kind": "array",
+            "element": 3
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 6,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 6
+          },
+          {
+            "kind": "union",
+            "types": [
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed.data.schema.oneOf"
+      ],
+      "sources": []
     },
     {
       "digest": "557e148d30b79ee48645850832b30c717d7c3b64641deb5d6133b8b4e91ee0b8",
@@ -34545,6 +35992,58 @@
         ]
       },
       "names": [],
+      "sources": []
+    },
+    {
+      "digest": "58b23171abed84b20a3b97847fade92e64ce7e7d7472fdcb6e77964ef6ffadb7",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed.data.schema.type"
+      ],
       "sources": []
     },
     {
@@ -35076,9 +36575,9 @@
         ]
       },
       "names": [
-        "SessionEventEnvelope[39].sourceEventSeqs",
-        "SessionEventEnvelope[52].sourceEventSeqs",
-        "SessionEventEnvelope[55].sourceEventSeqs",
+        "SessionEventEnvelope[43].sourceEventSeqs",
+        "SessionEventEnvelope[56].sourceEventSeqs",
+        "SessionEventEnvelope[59].sourceEventSeqs",
         "event:assistant/attempt.data.stream[0][0].dt",
         "event:assistant/attempt.data.stream[0][1].dt",
         "event:assistant/attempt.data.stream[0][2].dt",
@@ -36927,6 +38426,20 @@
       ]
     },
     {
+      "digest": "652fdc49bc60473b4197304e90953b090246a374f7e95cc0ce9c5dd14c134b66",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "upsert"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "658d895d187b26d83f3b53109a3bf77bbfba9f6f9a6d4bc4ee4315b4eb36239e",
       "schema": {
         "root": 0,
@@ -37274,6 +38787,47 @@
         ]
       },
       "names": [],
+      "sources": []
+    },
+    {
+      "digest": "693d41cd3064f005b48e287362b4951976539ac988480be65393107d9fb07813",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "array",
+            "element": 1
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed.data.schema.enum"
+      ],
       "sources": []
     },
     {
@@ -38751,8 +40305,10 @@
         ]
       },
       "names": [
-        "event:tool/result.data.meta[5]",
-        "event:tool/result.data.meta[5][0][5]"
+        "event:structured-output/armed.data.schema.default[5]",
+        "event:structured-output/armed.data.schema.default[5][0][5]",
+        "event:structured-output/armed.data.schema.examples[5]",
+        "event:tool/result.data.meta[5]"
       ],
       "sources": []
     },
@@ -38764,6 +40320,20 @@
           {
             "kind": "literal",
             "value": "remove"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "74cccf61c33e3e6df361829e94662973b18ddca6f89666c9b243b6ae811fd177",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "allow"
           }
         ]
       },
@@ -43642,6 +45212,251 @@
       "sources": []
     },
     {
+      "digest": "903b35215976a648b06fb4a9e244da923a4e973ea88207692410a3a347aefcc9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 23,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 24,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "maxRetries",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "schema",
+                "type": 3,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 8,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 8,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 13,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 14,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 15,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              6,
+              7
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              2,
+              4,
+              6,
+              7,
+              9,
+              10
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 8
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 7,
+                "value": 8
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 5
+          },
+          {
+            "kind": "array",
+            "element": 3
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 7,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 7
+          },
+          {
+            "kind": "union",
+            "types": [
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "literal",
+            "value": "structured-output/armed"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed"
+      ],
+      "sources": []
+    },
+    {
       "digest": "904bf499d98be4a3a5f836fcac533b6c4899569b018071e6604e1d32657d00fd",
       "schema": {
         "root": 0,
@@ -43671,6 +45486,20 @@
       "names": [
         "event:agent/inbox/spliced.data.inserted[0].source[16].changes[0].action"
       ],
+      "sources": []
+    },
+    {
+      "digest": "9051e0140bc92a125451a679dfa55d04766a7dd6696bc36e072eba1c996a41f9",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "string"
+          }
+        ]
+      },
+      "names": [],
       "sources": []
     },
     {
@@ -44225,6 +46054,8 @@
         "event:assistant/attempt.data.stream[0][1].texts",
         "event:assistant/attempt.data.stream[0][2].args",
         "event:request/header.data.header.config.stop",
+        "event:structured-output/armed.data.schema.required",
+        "event:structured-output/outcome.data.violations",
         "event:subagent/descriptor.data[1].toolFilter.allow",
         "event:subagent/descriptor.data[1].toolFilter.deny",
         "event:team/task.data.task.blockedBy",
@@ -44410,6 +46241,20 @@
       ]
     },
     {
+      "digest": "98889a31bae45e480319de503f425e1c6332764ab34b7e8de4efacd44ac974bf",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "deny"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "9890113e97dd3541787bfe6704f2b223d3a890b5325ca0acae2b0398909b413e",
       "schema": {
         "root": 0,
@@ -44559,9 +46404,9 @@
         ]
       },
       "names": [
-        "SessionEventEnvelope[39]",
-        "SessionEventEnvelope[52]",
-        "SessionEventEnvelope[55]"
+        "SessionEventEnvelope[43]",
+        "SessionEventEnvelope[56]",
+        "SessionEventEnvelope[59]"
       ],
       "sources": []
     },
@@ -44708,6 +46553,34 @@
           {
             "kind": "literal",
             "value": "tool-call-delta"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "9c895dbc89634531b298cfc72627359de426a47e1ee0c194e85de445702c89df",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "number"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "9d75bd62e9a0a0d12e1859ab8afd2a41f9d6c6949ef96ae7d31466a55439030b",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "array"
           }
         ]
       },
@@ -46771,6 +48644,44 @@
       },
       "names": [],
       "sources": []
+    },
+    {
+      "digest": "a3d15100ea27a178794f5f2e301174fc23e77b12f0ac38d4b4d956b798298822",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "id",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "literal",
+            "value": "delete"
+          }
+        ]
+      },
+      "names": [
+        "event:notes/change.data[1]"
+      ],
+      "sources": [
+        "packages/notes/tool-notes/src/types.ts:32"
+      ]
     },
     {
       "digest": "a3edd1efd1fef21b72c55e213c8a8b24196b091abde2b89db52be0b2aaae3cfa",
@@ -50228,6 +52139,20 @@
       "sources": []
     },
     {
+      "digest": "b458f9bc61d2eae3f0af9e6de92b86304e2e1b7a4ffbd3a36e84250ff0368a48",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "object"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "b4d298d90c798fa4d1f5b030ce3ce8031c4c41beafdb05323bec8b2a06903b43",
       "schema": {
         "root": 0,
@@ -50719,6 +52644,46 @@
       "sources": []
     },
     {
+      "digest": "b63a6f4cea3e720cf203a0c205771a9c66fe98e05e7aa4efd76aa9f837af7edb",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "union",
+            "types": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed.data.schema.const",
+        "packages/core/tools/src/json-schema.ts#JsonSchemaScalar"
+      ],
+      "sources": [
+        "packages/core/tools/src/json-schema.ts:18"
+      ]
+    },
+    {
       "digest": "b6ef9c6210be8350cd465f485cf520031fffa6bf3809c61a1e713e834c5982d0",
       "schema": {
         "root": 0,
@@ -50933,6 +52898,65 @@
       "sources": []
     },
     {
+      "digest": "b7dd94e36a66a719bc34fd6c7595fb0b8a5941ada72fcee254bf4cc0cf094061",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "decision",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "rationale",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "toolName",
+                "type": 1,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              3,
+              4
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "allow"
+          },
+          {
+            "kind": "literal",
+            "value": "deny"
+          }
+        ]
+      },
+      "names": [
+        "packages/interaction/guardian-approval/src/types.ts#GuardianReview"
+      ],
+      "sources": [
+        "packages/interaction/guardian-approval/src/types.ts:15"
+      ]
+    },
+    {
       "digest": "b815d7b91cdd9fc6ccc7dcba05cfc5ce1d55fab5fc0c0801803cd3630cedb602",
       "schema": {
         "root": 0,
@@ -51043,6 +53067,20 @@
       "sources": [
         "packages/goal/goal/src/types.ts:45"
       ]
+    },
+    {
+      "digest": "b8f6a94975ba5e59016a0d5ac3c9268725ec2d8cda1d242912ec4a323faa517c",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "guardian/review"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
     },
     {
       "digest": "b8fc636a2121df9d8423c242e03c9d23b7ab7c6fdce00e45746932c60b730f97",
@@ -52143,6 +54181,7 @@
         "event:assistant/attempt.data.stream[0][3].chunk[6].replayState.blocks[0]",
         "event:assistant/attempt.data.stream[0][3].chunk[6].replayState.response",
         "event:request/header.data.header.tools[0].parameters.[value]",
+        "event:structured-output/outcome.data.value",
         "event:tool/ptc-dispatch-start.data.arguments",
         "event:tool/ptc-dispatch.data.arguments"
       ],
@@ -52203,6 +54242,193 @@
         ]
       },
       "names": [],
+      "sources": []
+    },
+    {
+      "digest": "bdbae5a5b22990790d2e723b243e4a33ad67f97ba606ee76c50ea187bc0d7295",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "note",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "operation",
+                "type": 4,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "content",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "createdAt",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "id",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "revision",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "updatedAt",
+                "type": 3,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "upsert"
+          }
+        ]
+      },
+      "names": [
+        "event:notes/change.data[0]"
+      ],
+      "sources": [
+        "packages/notes/tool-notes/src/types.ts:31"
+      ]
+    },
+    {
+      "digest": "bdf26cf3270de9021ec93f98e94db88137ec95dc1ca19805f4d50bd943b84dd1",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "structured-output/outcome"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
+      "digest": "bf0eecf5245d94b2805460f0570f72ceddab0849dc17510dc035ab1db58cd802",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "data",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "ignorable",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "seq",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "time",
+                "type": 7,
+                "optional": false
+              },
+              {
+                "name": "type",
+                "type": 8,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "callId",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "decision",
+                "type": 3,
+                "optional": false
+              },
+              {
+                "name": "rationale",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "toolName",
+                "type": 2,
+                "optional": false
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "allow"
+          },
+          {
+            "kind": "literal",
+            "value": "deny"
+          },
+          {
+            "kind": "literal",
+            "value": true
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "guardian/review"
+          }
+        ]
+      },
+      "names": [
+        "event:guardian/review"
+      ],
       "sources": []
     },
     {
@@ -52852,6 +55078,8 @@
         ]
       },
       "names": [
+        "event:structured-output/armed.data.schema.default",
+        "event:structured-output/armed.data.schema.examples",
         "event:tool/result.data.meta",
         "packages/util/values/src/index.ts#JsonValue"
       ],
@@ -55223,6 +57451,20 @@
       ]
     },
     {
+      "digest": "cf27b283e634a400f1075932b676806f6ee97bee2690d2f459e5af4862b56819",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "null"
+          }
+        ]
+      },
+      "names": [],
+      "sources": []
+    },
+    {
       "digest": "cf6e3aaf1e2de6480aa0157730a41b9a492108a55304100b0f7e112711dd4331",
       "schema": {
         "root": 0,
@@ -56355,6 +58597,20 @@
       "names": [
         "event:session-log-deepseek/delivery-accepted"
       ],
+      "sources": []
+    },
+    {
+      "digest": "d69fc06daf5b538b592a34c16ac5aac2856b93840747dd10c13b611f61398e8e",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "literal",
+            "value": "boolean"
+          }
+        ]
+      },
+      "names": [],
       "sources": []
     },
     {
@@ -58587,11 +60843,11 @@
         "SessionEventEnvelope[36]",
         "SessionEventEnvelope[37]",
         "SessionEventEnvelope[38]",
+        "SessionEventEnvelope[39]",
         "SessionEventEnvelope[3]",
         "SessionEventEnvelope[40]",
         "SessionEventEnvelope[41]",
         "SessionEventEnvelope[42]",
-        "SessionEventEnvelope[43]",
         "SessionEventEnvelope[44]",
         "SessionEventEnvelope[45]",
         "SessionEventEnvelope[46]",
@@ -58601,11 +60857,15 @@
         "SessionEventEnvelope[4]",
         "SessionEventEnvelope[50]",
         "SessionEventEnvelope[51]",
+        "SessionEventEnvelope[52]",
         "SessionEventEnvelope[53]",
         "SessionEventEnvelope[54]",
-        "SessionEventEnvelope[56]",
+        "SessionEventEnvelope[55]",
         "SessionEventEnvelope[57]",
+        "SessionEventEnvelope[58]",
         "SessionEventEnvelope[5]",
+        "SessionEventEnvelope[60]",
+        "SessionEventEnvelope[61]",
         "SessionEventEnvelope[7]",
         "SessionEventEnvelope[8]",
         "SessionEventEnvelope[9]"
@@ -59878,6 +62138,198 @@
       ]
     },
     {
+      "digest": "f1e67102db25af3f2b27659f5a9761afa0ccbe2fd8c17f5919dfc54c0d1c384f",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 9,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 6,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 0,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 10,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 5,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 13,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              4,
+              5,
+              7,
+              8
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 5,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 6
+          },
+          {
+            "kind": "array",
+            "element": 2
+          },
+          {
+            "kind": "array",
+            "element": 0
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 5,
+                "value": 0
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 5
+          },
+          {
+            "kind": "union",
+            "types": [
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/core/tools/src/json-schema.ts#JsonSchemaNode"
+      ],
+      "sources": [
+        "packages/core/tools/src/json-schema.ts:31"
+      ]
+    },
+    {
       "digest": "f2da0f27c1e6add59982c37b15e4a4912c5b33466859cce3b13d503600e24aef",
       "schema": {
         "root": 0,
@@ -59956,6 +62408,71 @@
       ],
       "sources": [
         "packages/llm/llm/src/types.ts:383"
+      ]
+    },
+    {
+      "digest": "f51320950e41c1de9ff5f7d09e795cc0e59afb71e4956f9921112581c4adf045",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "attempts",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "turn",
+                "type": 1,
+                "optional": false
+              },
+              {
+                "name": "valid",
+                "type": 2,
+                "optional": false
+              },
+              {
+                "name": "value",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "violations",
+                "type": 4,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "opaque",
+            "reason": "unknown"
+          },
+          {
+            "kind": "array",
+            "element": 5
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          }
+        ]
+      },
+      "names": [
+        "packages/structured-output/structured-output/src/types.ts#StructuredOutputOutcome"
+      ],
+      "sources": [
+        "packages/structured-output/structured-output/src/types.ts:30"
       ]
     },
     {
@@ -60097,6 +62614,196 @@
       "sources": [
         "packages/context/session-reference/src/types.ts:13"
       ]
+    },
+    {
+      "digest": "f6209207a032c18aab2b5ef7e9eca665c49ab221ffc0e5319e7095d05d9f7100",
+      "schema": {
+        "root": 0,
+        "nodes": [
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 1,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "string"
+          },
+          {
+            "kind": "object",
+            "properties": [
+              {
+                "name": "additionalProperties",
+                "type": 3,
+                "optional": true
+              },
+              {
+                "name": "const",
+                "type": 4,
+                "optional": true
+              },
+              {
+                "name": "default",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "description",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "enum",
+                "type": 10,
+                "optional": true
+              },
+              {
+                "name": "examples",
+                "type": 7,
+                "optional": true
+              },
+              {
+                "name": "items",
+                "type": 2,
+                "optional": true
+              },
+              {
+                "name": "oneOf",
+                "type": 11,
+                "optional": true
+              },
+              {
+                "name": "properties",
+                "type": 0,
+                "optional": true
+              },
+              {
+                "name": "required",
+                "type": 12,
+                "optional": true
+              },
+              {
+                "name": "title",
+                "type": 1,
+                "optional": true
+              },
+              {
+                "name": "type",
+                "type": 13,
+                "optional": true
+              }
+            ],
+            "indices": []
+          },
+          {
+            "kind": "primitive",
+            "type": "boolean"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              5,
+              6
+            ]
+          },
+          {
+            "kind": "primitive",
+            "type": "null"
+          },
+          {
+            "kind": "primitive",
+            "type": "number"
+          },
+          {
+            "kind": "union",
+            "types": [
+              1,
+              3,
+              5,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "object",
+            "properties": [],
+            "indices": [
+              {
+                "key": 1,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "element": 7
+          },
+          {
+            "kind": "array",
+            "element": 4
+          },
+          {
+            "kind": "array",
+            "element": 2
+          },
+          {
+            "kind": "array",
+            "element": 1
+          },
+          {
+            "kind": "union",
+            "types": [
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          {
+            "kind": "literal",
+            "value": "array"
+          },
+          {
+            "kind": "literal",
+            "value": "boolean"
+          },
+          {
+            "kind": "literal",
+            "value": "integer"
+          },
+          {
+            "kind": "literal",
+            "value": "null"
+          },
+          {
+            "kind": "literal",
+            "value": "number"
+          },
+          {
+            "kind": "literal",
+            "value": "object"
+          },
+          {
+            "kind": "literal",
+            "value": "string"
+          }
+        ]
+      },
+      "names": [
+        "event:structured-output/armed.data.schema.properties"
+      ],
+      "sources": []
     },
     {
       "digest": "f634871d1e18b1eb199497ac8ab72d3964f48d03fbf611dc7521a1970cf429d9",

@@ -51,6 +51,11 @@ async function durablePromptContent(ctx: Context, blocks: SessionPromptParams['c
     : block)
 }
 
+/** The optional structured-output service this server arms per prompt. */
+interface StructuredOutputArmingService {
+  arm(agent: Agent, request: { schema: unknown; maxRetries?: number }): void
+}
+
 /** Recover the delegating parent from the service-owned scoped carrier. */
 function subagentParentOf(carrier: Scoped<SubagentRuntime>): Agent {
   return carrierKeyOf(carrier) as Agent
@@ -184,6 +189,16 @@ export class HarnessSdkJsonRpcServer {
     // Attachment admission crosses an async boundary where shutdown or an
     // agent-loop reload may detach the retained handle.
     this.assertLiveAgent(rec, params.sessionId)
+    // The structured-output service is optional: the schema activates only in
+    // deployments that composed the plugin. Arming before followup binds the
+    // contract to this exact turn; its settlement rides the session event stream.
+    if (params.outputSchema !== undefined) {
+      const structured = this.ctx.get('structuredOutput') as StructuredOutputArmingService | undefined
+      if (structured === undefined) {
+        throw new Error('outputSchema requires @deepseek-ai/dsh-structured-output in the deployment composition')
+      }
+      structured.arm(rec.handle.agent, { schema: params.outputSchema })
+    }
     const message = createUserMessage({
       content,
       source: { kind: 'user' },

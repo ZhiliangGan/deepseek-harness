@@ -46,6 +46,7 @@
 | `@deepseek-ai/dsh-tool-jobs` | `job_kill`、`job_list`、`job_output` | `ctx.tools`、`ctx.jobs`、`ctx.systemPrompt` | `tool/call`、`tool/result`、`user/message via agent.inject() for background completion notices` | - | 与任务种类无关的后台任务控制器：后台 bash 命令、PTY 发送和 subagent 都通过相同的 3 个工具读取、列出和终止。加载该插件会挂接控制器，从而启用生产方的 `ctx.jobs.start()`。 |
 | `@deepseek-ai/dsh-experimental-tool-agent-team` | `interrupt_agent`、`list_agents`、`send_message`、`spawn_teammate`、`team_task_create`、`team_task_get`、`team_task_list`、`team_task_update`、`wait_agent` | `ctx.tools`、`ctx.systemPrompt`、`ctx.agentTeams`、`an exact live Team member Agent` | `tool/call`、`team/member`、`team/message/queued`、`team/message/delivered`、`team/task`、`tool/result` | - | 这 9 个工具限定于隐式 Team Lead 与持久 teammate 作用域。随产品发布的 dsh-base bundle 默认禁用该包；文档中的 Agent Teams profile patch 会启用它，并禁用旧 continuable child 的同名控制工具。 |
 | `@deepseek-ai/dsh-tool-todo` | `todo_write` | `ctx.tools`、`owning Agent session` | `tool/call`、`todo/write`、`tool/result` | - | todo_write 是会话所有的状态；UI 将最新的 todo/write 事件渲染为检查清单。`allowParallelInProgress` 是没有默认值的必填项，因此本目录明确选择 `true`，对应描述允许同时存在多个 `in_progress` 项。选择 `false` 的部署会获得同一工具，但描述会要求只能有 1 个活动任务。 |
+| `@deepseek-ai/dsh-tool-notes` | `append_note`、`delete_note`、`list_notes`、`read_note`、`write_note` | `ctx.tools`、`owning Agent session` | `tool/call`、`notes/change`、`tool/result` | - | 五个会话所有的持久笔记工具；UI 从 notes/change 事件渲染。`maxNotes` 与 `maxNoteChars` 默认为 64 与 8000，本目录声明这些默认值。笔记跨上下文压缩与重启存活，因为持有它们的是所属会话日志而非活动上下文。 |
 | `@deepseek-ai/dsh-tool-workflow` | `workflow` | `ctx.tools`、`ctx.workflowEngine`、`ctx.systemPrompt`、`a calling Agent (exec.agent parents the script children)` | `tool/call`、`tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-web` | `web_fetch`、`web_search` | `ctx.tools`、`ctx.web`、`ctx.systemPrompt` | `tool/call`、`tool/result` | - | web_search 和 web_fetch 将提供方选择置于 ctx.web 之后，使模型可见 schema 在更换后端时保持稳定。 |
 
@@ -2349,6 +2350,119 @@ lsp 工具将提供方选择和语言服务器子进程置于 ctx.lsp 之后，�
 来源：[`packages/todo/tool-todo/src/index.ts`](../packages/todo/tool-todo/src/index.ts)
 
 todo_write 是会话所有的状态；UI 将最新的 todo/write 事件渲染为检查清单。`allowParallelInProgress` 是没有默认值的必填项，因此本目录明确选择 `true`，对应描述允许同时存在多个 `in_progress` 项。选择 `false` 的部署会获得同一工具，但描述会要求只能有 1 个活动任务。
+
+<a id="deepseek-aidsh-tool-notes"></a>
+
+## `@deepseek-ai/dsh-tool-notes`
+
+### `append_note`
+
+向持久笔记追加一行，笔记不存在时创建——无需重写整条笔记的运行日志（发现、尝试、决策）。笔记存放在会话日志中——它们跨上下文压缩与重启存活，与对话本身不同。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable lower-kebab-case note id."
+    },
+    "text": {
+      "type": "string",
+      "description": "The line to append (stored verbatim, no reformatting)."
+    }
+  },
+  "required": [
+    "id",
+    "text"
+  ]
+}
+```
+
+来源：[`packages/notes/tool-notes/src/index.ts`](../packages/notes/tool-notes/src/index.ts)
+
+### `delete_note`
+
+删除一条不再有用的持久笔记，保持笔记集合可浏览。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The note id, as shown by list_notes."
+    }
+  },
+  "required": [
+    "id"
+  ]
+}
+```
+
+来源：[`packages/notes/tool-notes/src/index.ts`](../packages/notes/tool-notes/src/index.ts)
+
+### `list_notes`
+
+列出本会话的持久工作笔记（id、预览、大小、版本号）。笔记存放在会话日志中——它们跨上下文压缩与重启存活，与对话本身不同。
+
+```json
+{
+  "type": "object",
+  "properties": {}
+}
+```
+
+来源：[`packages/notes/tool-notes/src/index.ts`](../packages/notes/tool-notes/src/index.ts)
+
+### `read_note`
+
+按 id 读取一条持久笔记。上下文压缩之后，重读笔记而不是相信你对它们的记忆。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The note id, as shown by list_notes."
+    }
+  },
+  "required": [
+    "id"
+  ]
+}
+```
+
+来源：[`packages/notes/tool-notes/src/index.ts`](../packages/notes/tool-notes/src/index.ts)
+
+### `write_note`
+
+创建或整体替换一条由短 id 标识的持久工作笔记（例如 "decisions"、"verify-steps"）。记录不能丢失的精确事实。笔记存放在会话日志中——它们跨上下文压缩与重启存活，与对话本身不同。存放带理由的决策、约束、路径、命令与验证步骤。内容会替换整条笔记。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable lower-kebab-case note id you will re-read later."
+    },
+    "content": {
+      "type": "string",
+      "description": "The complete new content of the note."
+    }
+  },
+  "required": [
+    "id",
+    "content"
+  ]
+}
+```
+
+来源：[`packages/notes/tool-notes/src/index.ts`](../packages/notes/tool-notes/src/index.ts)
+
+五个会话所有的持久笔记工具；UI 从 notes/change 事件渲染。`maxNotes` 与 `maxNoteChars` 默认为 64 与 8000，本目录声明这些默认值。笔记跨上下文压缩与重启存活，因为持有它们的是所属会话日志而非活动上下文。
 
 <a id="deepseek-aidsh-tool-workflow"></a>
 
