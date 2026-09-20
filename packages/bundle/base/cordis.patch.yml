@@ -287,6 +287,17 @@
       name: '@deepseek-ai/dsh-skill-badge'
       disabled: true
 
+    # Bundled reasoning-discipline skills (program-first, decompose-first,
+    # best-of-n sampling, tree search, collaborative debate). Enabled for every
+    # base-backed profile; the sampling skills multiply model calls only when a
+    # session invokes them, so the catalog lines are the standing cost. A
+    # deployment that wants them off disables the row through an overlay
+    # ($DSH_HOME/cordis.patch.yml, or a --patch <file>):
+    #   - id: skill-reasoning
+    #     disabled: true
+    - id: skill-reasoning
+      name: '@deepseek-ai/dsh-skill-reasoning'
+
     - id: tool-skill
       name: '@deepseek-ai/dsh-tool-skill'
 
@@ -451,6 +462,32 @@
       config:
         thresholds: [3, 5, 8]
         argumentsPreviewChars: 500
+
+    # Per-session turn and token budgets: runaway protection, not usage
+    # discipline. maxTurns 256 aligns with the goal round cap so a sanctioned
+    # maximally-driven session never trips it; maxSessionTokens 4M is several
+    # full-context sessions' worth of fresh (uncached input + output) tokens.
+    # Tune or disable through an overlay ($DSH_HOME/cordis.patch.yml):
+    #   - id: session-budget
+    #     config: { maxTurns: 256, maxSessionTokens: 4000000 }
+    - id: session-budget
+      name: '@deepseek-ai/dsh-session-budget'
+      config:
+        maxTurns: 256
+        maxSessionTokens: 4000000
+
+    # Independent answer verification: the ctx.verifier judge service and its
+    # model-facing verify_output Consumer. The judge rides the same default
+    # route as chat (agent-default-model) at temperature 0; point it at a
+    # cheaper route through an overlay when verification volume grows.
+    - id: verifier
+      name: '@deepseek-ai/dsh-verifier'
+      config:
+        judgeProvider: deepseek-official
+        judgeModel: deepseek-flash
+
+    - id: tool-verifier
+      name: '@deepseek-ai/dsh-tool-verifier'
 
     # The shared base enables the stable model-facing web_search and web_fetch
     # tools. The Web app disables this host row and composes both tools per agent

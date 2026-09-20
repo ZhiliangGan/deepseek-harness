@@ -207,6 +207,14 @@ const SERVICE_ROLES: ServiceRole[] = [
     note: 'Owns isolated per-session replay folds; pressure consumers share immutable revisioned measurements.',
   },
   {
+    key: 'verifier',
+    pkg: 'verifier',
+    title: 'Independent answer verification',
+    mode: 'core',
+    consumers: ['tool-verifier'],
+    note: 'One auxiliary judge call per review settles a bounded verdict; the model sees it as the Consumer tool result.',
+  },
+  {
     key: 'toolResultPruner',
     pkg: 'compaction-tool-result-pruner',
     title: 'Model-free tool-result pruning',

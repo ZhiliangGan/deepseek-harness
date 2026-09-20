@@ -434,6 +434,12 @@
 - id: tool-skill
   disabled: true
 
+# The verifier service stays on the host plane; its model-facing tool moves
+# behind the presets with the other per-agent rows.
+
+- id: tool-verifier
+  disabled: true
+
 # The goal service and session driver stay on the host plane, where Gateway
 # remotes resolve them. Presets own the human command and model-facing tool.
 

@@ -1055,6 +1055,23 @@ Types: [FileAttachmentRef](attachment.zh.md)
 
 Source: [`packages/llm/llm/src/index.ts`](../../packages/llm/llm/src/index.ts)
 
+<a id="ctxverifier--verifierservice"></a>
+
+### `ctx.verifier` — `VerifierService`
+
+The independent verifier.
+
+```ts cordis-catalog
+/**
+ * Verify one candidate output against its task.
+ * @param request - the task, candidate, optional criteria, and the session the review belongs to.
+ * @returns the settled review; judge failures settle `uncertain`, never `pass`.
+ */
+async review(request: VerifierReviewRequest): Promise<VerifierReview>
+```
+
+Source: [`packages/verifier/verifier/src/index.ts`](../../packages/verifier/verifier/src/index.ts)
+
 <a id="llm-events"></a>
 
 ### `llm/*` events

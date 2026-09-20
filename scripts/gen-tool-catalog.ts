@@ -18,6 +18,8 @@ import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
 import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
 import SqliteSessionQueryEngine from '@deepseek-ai/dsh-session-query-sqlite'
 import GoalService from '@deepseek-ai/dsh-goal'
+import VerifierService from '@deepseek-ai/dsh-verifier'
+import * as ToolVerifier from '@deepseek-ai/dsh-tool-verifier'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime, { type Config as ToolsConfig } from '@deepseek-ai/dsh-tools'
 import LocalBashExecutor from '@deepseek-ai/dsh-bash-local'
@@ -624,6 +626,20 @@ const TOOL_PACKAGES: ToolPackage[] = [
     },
     note:
       'todo_write is session-owned state; UIs render the latest todo/write event as a checklist. `allowParallelInProgress` is required with no default, so the catalog states its choice: `true`, whose description invites several `in_progress` items. A deployment choosing `false` receives the same tool with a description asking for exactly one active task.',
+  },
+  {
+    pkg: '@deepseek-ai/dsh-tool-verifier',
+    dir: 'tool-verifier',
+    source: 'packages/verifier/tool-verifier/src/index.ts',
+    requires: ['ctx.tools', 'ctx.verifier'],
+    writes: ['tool/call', 'tool/result'],
+    async mount(ctx) {
+      await ctx.plugin(LlmRuntime)
+      await ctx.plugin(VerifierService, { judgeProvider: 'catalog-judge', judgeModel: 'catalog-judge' })
+      await ctx.plugin(ToolVerifier)
+    },
+    note:
+      'verify_output is the model-facing Consumer of the ctx.verifier seam; the service mounts with a placeholder judge route because schema harvest never calls a judge. Both packages ship enabled in dsh-base with the product-default judge route.',
   },
   {
     pkg: '@deepseek-ai/dsh-tool-notes',

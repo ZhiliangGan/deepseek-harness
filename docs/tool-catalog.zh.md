@@ -46,6 +46,7 @@
 | `@deepseek-ai/dsh-tool-jobs` | `job_kill`、`job_list`、`job_output` | `ctx.tools`、`ctx.jobs`、`ctx.systemPrompt` | `tool/call`、`tool/result`、`user/message via agent.inject() for background completion notices` | - | 与任务种类无关的后台任务控制器：后台 bash 命令、PTY 发送和 subagent 都通过相同的 3 个工具读取、列出和终止。加载该插件会挂接控制器，从而启用生产方的 `ctx.jobs.start()`。 |
 | `@deepseek-ai/dsh-experimental-tool-agent-team` | `interrupt_agent`、`list_agents`、`send_message`、`spawn_teammate`、`team_task_create`、`team_task_get`、`team_task_list`、`team_task_update`、`wait_agent` | `ctx.tools`、`ctx.systemPrompt`、`ctx.agentTeams`、`an exact live Team member Agent` | `tool/call`、`team/member`、`team/message/queued`、`team/message/delivered`、`team/task`、`tool/result` | - | 这 9 个工具限定于隐式 Team Lead 与持久 teammate 作用域。随产品发布的 dsh-base bundle 默认禁用该包；文档中的 Agent Teams profile patch 会启用它，并禁用旧 continuable child 的同名控制工具。 |
 | `@deepseek-ai/dsh-tool-todo` | `todo_write` | `ctx.tools`、`owning Agent session` | `tool/call`、`todo/write`、`tool/result` | - | todo_write 是会话所有的状态；UI 将最新的 todo/write 事件渲染为检查清单。`allowParallelInProgress` 是没有默认值的必填项，因此本目录明确选择 `true`，对应描述允许同时存在多个 `in_progress` 项。选择 `false` 的部署会获得同一工具，但描述会要求只能有 1 个活动任务。 |
+| `@deepseek-ai/dsh-tool-verifier` | `verify_output` | `ctx.tools`、`ctx.verifier` | `tool/call`、`tool/result` | - | verify_output 是 ctx.verifier 接缝的模型侧消费者；schema 采集从不调用裁判，服务以占位裁判路由挂载。两个包均随 dsh-base 默认启用，判路取产品默认路由。 |
 | `@deepseek-ai/dsh-tool-notes` | `append_note`、`delete_note`、`list_notes`、`read_note`、`write_note` | `ctx.tools`、`owning Agent session` | `tool/call`、`notes/change`、`tool/result` | - | 五个会话所有的持久笔记工具；UI 从 notes/change 事件渲染。`maxNotes` 与 `maxNoteChars` 默认为 64 与 8000，本目录声明这些默认值。笔记跨上下文压缩与重启存活，因为持有它们的是所属会话日志而非活动上下文。 |
 | `@deepseek-ai/dsh-tool-workflow` | `workflow` | `ctx.tools`、`ctx.workflowEngine`、`ctx.systemPrompt`、`a calling Agent (exec.agent parents the script children)` | `tool/call`、`tool/result` | - | - |
 | `@deepseek-ai/dsh-tool-web` | `web_fetch`、`web_search` | `ctx.tools`、`ctx.web`、`ctx.systemPrompt` | `tool/call`、`tool/result` | - | web_search 和 web_fetch 将提供方选择置于 ctx.web 之后，使模型可见 schema 在更换后端时保持稳定。 |
@@ -2350,6 +2351,41 @@ lsp 工具将提供方选择和语言服务器子进程置于 ctx.lsp 之后，�
 来源：[`packages/todo/tool-todo/src/index.ts`](../packages/todo/tool-todo/src/index.ts)
 
 todo_write 是会话所有的状态；UI 将最新的 todo/write 事件渲染为检查清单。`allowParallelInProgress` 是没有默认值的必填项，因此本目录明确选择 `true`，对应描述允许同时存在多个 `in_progress` 项。选择 `false` 的部署会获得同一工具，但描述会要求只能有 1 个活动任务。
+
+<a id="deepseek-aidsh-tool-verifier"></a>
+
+## `@deepseek-ai/dsh-tool-verifier`
+
+### `verify_output`
+
+在承诺一个候选答案之前，先运行一次独立裁判按其任务核验该答案。传入任务与可选的验收标准；候选默认取本会话最近一条回答文本。在定稿高风险答案前使用，或当用户要求核验或复核时使用。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "task": {
+      "type": "string",
+      "description": "The task the candidate answer claims to complete."
+    },
+    "subject": {
+      "type": "string",
+      "description": "The candidate output to verify. Defaults to the latest answer text in this conversation."
+    },
+    "criteria": {
+      "type": "string",
+      "description": "Optional acceptance criteria the candidate must satisfy, beyond the task itself."
+    }
+  },
+  "required": [
+    "task"
+  ]
+}
+```
+
+Source: [`packages/verifier/tool-verifier/src/index.ts`](../packages/verifier/tool-verifier/src/index.ts)
+
+verify_output 是 ctx.verifier 接缝的模型侧消费者；schema 采集从不调用裁判，服务以占位裁判路由挂载。两个包均随 dsh-base 默认启用，判路取产品默认路由。
 
 <a id="deepseek-aidsh-tool-notes"></a>
 

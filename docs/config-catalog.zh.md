@@ -2164,6 +2164,29 @@ Depends on: `Readable` (`node:stream`) · `Writable` (`node:stream`)
 
 来源：[`packages/sdk/server/src/index.ts:25`](../packages/sdk/server/src/index.ts)
 
+<a id="deepseek-aidsh-session-budget"></a>
+
+## `@deepseek-ai/dsh-session-budget`
+
+Requires: `sessionProjections`
+
+```ts config-catalog
+/**
+ * Plugin config, validated by the same-named schemastery schema plus the
+ * load-time checks in `apply` (misconfiguration fails loud: a non-integer or
+ * negative limit, or a config where every limit is 0 — a guard that bounds
+ * nothing — throws at plugin load, never a silent fall-back).
+ */
+export interface Config {
+  /** Maximum turns per session; a proposed turn beyond the cap is rejected without a step (default 0, no turn cap). */
+  maxTurns?: number
+  /** Maximum cumulative session tokens — uncached input plus output — before new work stops (default 0, no token cap). */
+  maxSessionTokens?: number
+}
+```
+
+Source: [`packages/guard/session-budget/src/index.ts:31`](../packages/guard/session-budget/src/index.ts)
+
 <a id="deepseek-aidsh-session-log-deepseek"></a>
 
 ## `@deepseek-ai/dsh-session-log-deepseek`
@@ -2514,6 +2537,22 @@ export interface Config {
 ```
 
 来源：[`packages/skill/skill-office/src/index.ts:15`](../packages/skill/skill-office/src/index.ts)
+
+<a id="deepseek-aidsh-skill-reasoning"></a>
+
+## `@deepseek-ai/dsh-skill-reasoning`
+
+Requires: `skills`
+
+```ts config-catalog
+/** Reasoning skill resource location. */
+export interface Config {
+  /** Absolute assets directory containing the five skill folders; defaults to packaged assets. */
+  assetRoot?: string
+}
+```
+
+Source: [`packages/skill/skill-reasoning/src/index.ts:20`](../packages/skill/skill-reasoning/src/index.ts)
 
 <a id="deepseek-aidsh-spill-local"></a>
 
@@ -3611,6 +3650,28 @@ export type ApprovalPolicy = 'ask' | 'never'
 
 来源：[`packages/interaction/user-approval/src/index.ts:128`](../packages/interaction/user-approval/src/index.ts)
 
+<a id="deepseek-aidsh-verifier"></a>
+
+## `@deepseek-ai/dsh-verifier`
+
+Requires: `llm`
+
+```ts config-catalog
+/** Verifier service configuration: the judge route and reply budgets. */
+export interface Config {
+  /** Provider route serving the judge calls. */
+  judgeProvider: string
+  /** Model serving the judge calls. */
+  judgeModel: string
+  /** Output-token cap for one judge reply. */
+  maxOutputTokens?: number
+  /** Wall-clock budget for one judge call; expiry settles the review `uncertain`. */
+  timeoutMs?: number
+}
+```
+
+Source: [`packages/verifier/verifier/src/index.ts:34`](../packages/verifier/verifier/src/index.ts)
+
 <a id="deepseek-aidsh-web"></a>
 
 ## `@deepseek-ai/dsh-web`
@@ -3926,6 +3987,7 @@ export interface Config {
 - `@deepseek-ai/dsh-tool-call-timeout-policy` — 需要 `tools`（[`packages/guard/timeout-policy/src/index.ts`](../packages/guard/timeout-policy/src/index.ts)）
 - `@deepseek-ai/dsh-tool-cordis` — 需要 `tools` · `systemPrompt` · `cordisInspect`（[`packages/extensions/tool-cordis/src/index.ts`](../packages/extensions/tool-cordis/src/index.ts)）
 - `@deepseek-ai/dsh-tool-subagent-control` — 需要 `tools` · `subagents`（[`packages/subagent/tool-subagent-control/src/index.ts`](../packages/subagent/tool-subagent-control/src/index.ts)）
+- `@deepseek-ai/dsh-tool-verifier` — requires `tools` · `verifier` ([`packages/verifier/tool-verifier/src/index.ts`](../packages/verifier/tool-verifier/src/index.ts))
 - `@deepseek-ai/dsh-user-questions`（[`packages/interaction/user-questions/src/index.ts`](../packages/interaction/user-questions/src/index.ts)）
 - `@deepseek-ai/dsh-webhook` — 需要 `agents` · `agentDefaultModel` · `agentPresets` · `permissionPresets` · `sessionTitle` · `workspaceRegistry`（[`packages/webhook/webhook/src/index.ts`](../packages/webhook/webhook/src/index.ts)）
 - `@deepseek-ai/dsh-workspace` — 需要 `storageDomain` · `sessionPersistence`（[`packages/workspace/workspace/src/index.ts`](../packages/workspace/workspace/src/index.ts)）

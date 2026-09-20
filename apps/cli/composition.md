@@ -106,6 +106,8 @@ flowchart LR
   cfg --> plugin_dsh_base_skill_filesystem
   plugin_dsh_base_skill_badge["skill-badge<br/>@deepseek-ai/dsh-skill-badge"]
   cfg --> plugin_dsh_base_skill_badge
+  plugin_dsh_base_skill_reasoning["skill-reasoning<br/>@deepseek-ai/dsh-skill-reasoning"]
+  cfg --> plugin_dsh_base_skill_reasoning
   plugin_dsh_base_tool_skill["tool-skill<br/>@deepseek-ai/dsh-tool-skill"]
   cfg --> plugin_dsh_base_tool_skill
   plugin_dsh_base_commands["commands<br/>@deepseek-ai/dsh-commands"]
@@ -168,6 +170,12 @@ flowchart LR
   cfg --> plugin_dsh_base_tool_ralph
   plugin_dsh_base_repeat_tool_reminder["repeat-tool-reminder<br/>@deepseek-ai/dsh-repeat-tool-reminder"]
   cfg --> plugin_dsh_base_repeat_tool_reminder
+  plugin_dsh_base_session_budget["session-budget<br/>@deepseek-ai/dsh-session-budget"]
+  cfg --> plugin_dsh_base_session_budget
+  plugin_dsh_base_verifier["verifier<br/>@deepseek-ai/dsh-verifier"]
+  cfg --> plugin_dsh_base_verifier
+  plugin_dsh_base_tool_verifier["tool-verifier<br/>@deepseek-ai/dsh-tool-verifier"]
+  cfg --> plugin_dsh_base_tool_verifier
   plugin_dsh_base_web["web<br/>@deepseek-ai/dsh-web"]
   cfg --> plugin_dsh_base_web
   plugin_dsh_base_web_search_deepseek["web-search-deepseek<br/>@deepseek-ai/dsh-web-search-deepseek"]
@@ -241,6 +249,7 @@ flowchart LR
 | `skill` | `@deepseek-ai/dsh-skill` |
 | `skill-filesystem` | `@deepseek-ai/dsh-skill-filesystem` |
 | `skill-badge` | `@deepseek-ai/dsh-skill-badge` |
+| `skill-reasoning` | `@deepseek-ai/dsh-skill-reasoning` |
 | `tool-skill` | `@deepseek-ai/dsh-tool-skill` |
 | `commands` | `@deepseek-ai/dsh-commands` |
 | `command-feedback` | `@deepseek-ai/dsh-command-feedback` |
@@ -272,6 +281,9 @@ flowchart LR
 | `tool-goal` | `@deepseek-ai/dsh-tool-goal` |
 | `tool-ralph` | `@deepseek-ai/dsh-tool-ralph` |
 | `repeat-tool-reminder` | `@deepseek-ai/dsh-repeat-tool-reminder` |
+| `session-budget` | `@deepseek-ai/dsh-session-budget` |
+| `verifier` | `@deepseek-ai/dsh-verifier` |
+| `tool-verifier` | `@deepseek-ai/dsh-tool-verifier` |
 | `web` | `@deepseek-ai/dsh-web` |
 | `web-search-deepseek` | `@deepseek-ai/dsh-web-search-deepseek` |
 | `web-fetch-http` | `@deepseek-ai/dsh-web-fetch-http` |

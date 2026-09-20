@@ -3112,6 +3112,24 @@ export const SERVICE_API: readonly ServiceApiEntry[] = [
     ],
   },
   {
+    key: 'verifier',
+    summary: 'The independent verifier.',
+    description: 'The independent verifier.',
+    methods: [
+      {
+        signature: 'readonly resolved: { readonly judgeProvider: string readonly judgeModel: string readonly maxOutputTokens: number readonly timeoutMs: number }',
+        description: 'Resolved and validated judge routing and budgets.',
+        parameters: [],
+      },
+      {
+        signature: 'async review(request: VerifierReviewRequest): Promise<VerifierReview>',
+        description: 'Verify one candidate output against its task.',
+        parameters: [{ name: 'request', description: 'the task, candidate, optional criteria, and the session the review belongs to.' }],
+        returns: 'the settled review; judge failures settle `uncertain`, never `pass`.',
+      },
+    ],
+  },
+  {
     key: 'web',
     summary: 'The web access service.',
     description: 'The web access service. Registered as `ctx.web` (one instance per context).\n\nSelection semantics (resolved at execution time, never order-dependent):\n\n- A configured id that is registered and `available()` → that provider.\n- A configured id not registered → `WEB_PROVIDER_CONFIGURED_MISSING`.\n- A configured id registered but unavailable → `WEB_PROVIDER_CONFIGURED_UNAVAILABLE`.\n- No id configured, exactly one registered usable provider → that provider.\n- No id configured, multiple usable providers → `WEB_PROVIDER_AMBIGUOUS`.\n- No id configured, no usable provider → `WEB_PROVIDER_UNAVAILABLE`.',
@@ -6969,6 +6987,18 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   {
     name: 'VerifiedWebhookDelivery',
     declaration: 'export interface VerifiedWebhookDelivery<K extends string = string> {\n    readonly kind: K;\n    readonly source: WebhookSourceId;\n    readonly deliveryId: WebhookDeliveryId;\n    readonly event: WebhookEventOf<K>;\n    readonly receivedAt: number;\n}',
+  },
+  {
+    name: 'VerifierReview',
+    declaration: 'export interface VerifierReview {\n    readonly verdict: VerifierVerdict;\n    readonly score: number;\n    readonly rationale: string;\n    readonly judge: {\n        readonly provider: string;\n        readonly model: string;\n    };\n}',
+  },
+  {
+    name: 'VerifierReviewRequest',
+    declaration: 'export interface VerifierReviewRequest {\n    readonly task: string;\n    readonly subject: string;\n    readonly criteria?: string;\n    readonly session: Session;\n    readonly signal?: AbortSignal;\n}',
+  },
+  {
+    name: 'VerifierVerdict',
+    declaration: 'export type VerifierVerdict = \'pass\' | \'fail\' | \'uncertain\';',
   },
   {
     name: 'WebBootBatch',

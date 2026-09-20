@@ -45,6 +45,7 @@ packages/    @deepseek-ai/dsh-<pkg> workspaces at packages/<group>/<pkg>/
   schedule/             scheduled follow-ups
   preset/               agent composition
   guard/                loop/tool guards
+  verifier/             independent answer verification
   extensions/           runtime self-modification
   hooks/                Claude Code/Codex bridges
   session/              durable sessions
