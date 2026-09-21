@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-This bundled provider ships five reasoning-discipline skills for agents. `program-first` routes numeric and data-transformation work through executed programs; `decompose-first` sequences multi-constraint tasks into ordered subproblems; `best-of-n-sampling` and `tree-search` teach complete `workflow` tool patterns — parallel candidates with executable-check, vote, or judge selection, and score-driven iterative refinement — and `collaborative-debate` settles contested claims through cross-model debate with mechanically quote-verified evidence. The provider is enabled in the `dsh` base bundle, so every base-backed profile ships the disciplines.
+This bundled provider ships six reasoning-discipline skills for agents. `program-first` routes numeric and data-transformation work through executed programs; `decompose-first` sequences multi-constraint tasks into ordered subproblems; `best-of-n-sampling` and `tree-search` teach complete `workflow` tool patterns — parallel candidates with executable-check, vote, or judge selection, and score-driven iterative refinement — and `collaborative-debate` settles contested claims through cross-model debate with mechanically quote-verified evidence. The provider is enabled in the `dsh` base bundle, so every base-backed profile ships the disciplines.
 
 ## Table of Contents
 

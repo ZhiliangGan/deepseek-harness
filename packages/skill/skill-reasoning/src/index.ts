@@ -14,7 +14,7 @@ import z from '@deepseek-ai/schemastery'
 import { BUNDLED_SKILL_RANK, type SkillCandidate, type SkillProvider } from '@deepseek-ai/dsh-skill'
 import { parse as parseYaml } from 'yaml'
 
-const SKILL_NAMES = ['program-first', 'decompose-first', 'best-of-n-sampling', 'tree-search', 'collaborative-debate'] as const
+const SKILL_NAMES = ['program-first', 'decompose-first', 'best-of-n-sampling', 'tree-search', 'collaborative-debate', 'reasoning-router'] as const
 
 /** Reasoning skill resource location. */
 export interface Config {

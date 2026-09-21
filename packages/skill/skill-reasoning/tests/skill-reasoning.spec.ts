@@ -10,7 +10,7 @@ import * as SkillReasoning from '@deepseek-ai/dsh-skill-reasoning'
 import { describe, expect, it } from 'vitest'
 
 const assets = fileURLToPath(new URL('../assets/', import.meta.url))
-const names = ['best-of-n-sampling', 'collaborative-debate', 'decompose-first', 'program-first', 'tree-search']
+const names = ['best-of-n-sampling', 'collaborative-debate', 'decompose-first', 'program-first', 'reasoning-router', 'tree-search']
 
 describe('bundled reasoning skills', () => {
   it('loads each packaged body and removes all candidates on disposal', async () => {
