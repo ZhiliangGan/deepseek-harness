@@ -46,10 +46,11 @@ The shipped base composition carries the row as `disabled: true`; enable it ther
 - **`best-of-n-sampling`** — worked `workflow` scripts for parallel candidate generation with three selection tiers (executable check, majority vote, independent judge), plus cost guidance.
 - **`tree-search`** — a worked iterative-refinement script: best-so-far candidate, parallel improvements, same-judge scoring, strict-promotion and no-gain early stop.
 - **`collaborative-debate`** — a worked two-debater script with cross-model routing, exact-quote evidence verified against the source in-script, and a judge that keeps disagreements alive; built against the two documented failure modes of debate (competitive rhetoric and consensus echo).
+- **`reasoning-router`** — the triage-and-escalation discipline: classify the task's error profile, then climb the cheapest strategy ladder (direct answer, self-check, execute/verify, diversify, contest) only as far as the failure evidence demands.
 
 ### Observable success and failures
 
-With the plugin mounted, all five skills appear in the session catalog and are loadable by name (and by `/skill-name`); disabling the row keeps them out of every catalog. A broken asset tree — a missing `SKILL.md` or one without frontmatter or description — fails plugin load loudly instead of registering a partial catalog.
+With the plugin mounted, all six skills appear in the session catalog and are loadable by name (and by `/skill-name`); disabling the row keeps them out of every catalog. A broken asset tree — a missing `SKILL.md` or one without frontmatter or description — fails plugin load loudly instead of registering a partial catalog.
 
 -----
 
@@ -95,7 +96,7 @@ Indirectly, through `dsh-tool-skill`, which renders the provider's catalog entry
 
 #### KV Cache effect
 
-The five catalog entries ride the durable skills reminder message; any loaded body follows as retained tool-result content. Both append after the reusable request prefix and do not invalidate existing KV-cache entries.
+The six catalog entries ride the durable skills reminder message; any loaded body follows as retained tool-result content. Both append after the reusable request prefix and do not invalidate existing KV-cache entries.
 
 ## Known Limitations and Deferred Work
 
@@ -106,7 +107,7 @@ These limits define what the bundled provider does not do. They are current pack
 
 - **Sampling skills teach patterns, not policy** — the `workflow` tool's own prompt section restricts workflows to explicit user requests; the skills inherit that policy and cannot loosen it.
 - **Judge diversity is prompt-borne** — the sampling scripts manufacture candidate diversity through framing and instructions; per-child sampling parameters (temperature, seed) are not exposed to workflow scripts.
-- **Five fixed skills** — deployments needing other disciplines author their own skills instead of extending this provider.
+- **Six fixed skills** — deployments needing other disciplines author their own skills instead of extending this provider.
 
 <a id="dev-note"></a>
 ### Dev Note
